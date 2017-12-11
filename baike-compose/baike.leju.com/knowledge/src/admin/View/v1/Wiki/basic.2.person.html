@@ -1,0 +1,67 @@
+<div class="b_card g_card clearfix">
+	<span>基本信息：</span>
+	<div class="g_inbox clearfix">
+		<div class="g_sinput">
+			<em>中文名称：</em>
+			<input type="text" name="basic[cnname]" placeholder="中文名称" class="g_ip001 js_verify" value="{$data.basic.cnname}" leng="10">
+		</div>
+		<div class="g_sinput">
+			<em>职&ensp;&ensp;位：</em>
+			<input type="text" name="basic[position]" placeholder="职位" class="g_ip001 js_verify" value="{$data.basic.position}" leng="10">
+		</div>
+		<div class="g_sinput">
+			<em>出生日期：</em>
+			<?php
+				$basic_ctime = '';
+				if ( isset($data['basic']['birthday']) && trim($data['basic']['birthday'])!='' ) {
+					$basic_ctime = date('Y-m-d', strtotime($data['basic']['birthday']));
+				}
+			?>
+			<input name="basic[birthday]" type="text" value="{$basic_ctime}" placeholder="创建时间" class="g_ip001 js_verify" id="basic_birthday">
+		</div>
+		<div class="g_sinput">
+			<em>国&emsp;&emsp;籍：</em>
+			<input type="text" name="basic[nationality]" placeholder="该人物当前的国籍" class="g_ip001 js_verify" value="{$data.basic.nationality}" leng="10">
+		</div>
+		<div class="g_sinput">
+			<em>籍&emsp;&emsp;贯：</em>
+			<input type="text" name="basic[nativeplace]" placeholder="家乡指该人物的籍贯" class="g_ip001 js_verify" value="{$data.basic.nativeplace}" leng="10">
+		</div>
+		<div class="g_sinput">
+			<em>出&ensp;生&ensp;地：</em>
+			<input type="text" name="basic[birthplace]" placeholder="出生地" class="g_ip001 js_verify" value="{$data.basic.birthplace}" leng="10">
+		</div>
+		<div class="g_sinput">
+			<em>民&emsp;&emsp;族：</em>
+			<input type="text" name="basic[nation]" placeholder="民族" class="g_ip001 js_verify" value="{$data.basic.nation}" leng="10">
+		</div>
+		<div class="g_sinput">
+			<em>性&emsp;&emsp;别：</em>
+			<select name="basic[sex]" class="g_s001 g_s002">
+				<option value="">未选择</option>
+				<?php
+				foreach ( $dicts['BASIC_SEX'] as $i => $item ) {
+					$selected = ( $data['basic']['sex']==$item['name'] ) ? ' selected' : '';
+				?>
+				<option value="{$item['name']}"{$selected}>{$item['name']}</option>
+				<?php } ?>
+			</select>
+		</div>
+		<div class="g_sinput">
+			<em>毕业院校：</em>
+			<input type="text" name="basic[college]" placeholder="毕业院校，最多10个汉字" class="g_ip001 js_verify" value="{$data.basic.college}" leng="10">
+		</div>
+		<div class="g_sinput">
+			<em>代表作品：</em>
+			<input type="text" name="basic[representative]" placeholder="代表作品，最多50个汉字" class="g_ip001 js_verify" value="{$data.basic.representative}" leng="50">
+		</div>
+		<div class="g_sinput">
+			<em>所获荣誉：</em>
+			<input type="text" name="basic[honour]" placeholder="所获荣誉，最多50个汉字" class="g_ip001 js_verify" value="{$data.basic.honour}" leng="50">
+		</div>
+		<div class="g_sinput">
+			<em>主要成就：</em>
+			<input type="text" name="basic[achievement]" placeholder="主要成就，最多50个汉字" class="g_ip001 js_verify" value="{$data.basic.achievement}" leng="50">
+		</div>
+	</div>
+</div>

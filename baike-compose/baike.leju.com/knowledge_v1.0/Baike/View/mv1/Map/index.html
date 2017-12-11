@@ -1,0 +1,24 @@
+<div class="content_wrapper {$jsflag}">
+	<!-- 知识导航 -->
+	<div class="zNav">
+		<notempty name="list">
+		<volist name="list" id="c" >
+		<div class="nav_blk">
+			<a href="<?php echo url('cate', array('id'=>$c['id'], cookie('city_en')));?>"><h2>{$c.name}</h2></a>
+			<notempty name="c.son">
+			<ul class="clearfix">
+			<li>
+			<volist name="c.son" id="s" key="key">
+				<if condition="($key-1) % 3 == 0">
+					<neq name="key" value="1"></li><li></neq><a href="<?php echo url('cate', array('id'=>$s['id'], cookie('city_en')));?>">{$s.name}</a>
+				<else/>
+					<a href="<?php echo url('cate', array('id'=>$s['id'], cookie('city_en')));?>">{$s.name}</a>
+				</if>
+			</volist>
+			</ul>
+			</notempty>
+		</div>
+		</volist>
+		</notempty>
+	</div>
+</div>

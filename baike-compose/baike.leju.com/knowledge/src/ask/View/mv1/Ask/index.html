@@ -1,0 +1,93 @@
+<div class="header">
+	<div class="h-t-warp">
+		<a href="javascript:;" class="h-t-cancle">取消</a>
+		<a href="javascript:;" class="h-t-submit">发送</a>
+	</div>
+</div>
+<form name="frmQ" method="post" action="/ask/save">
+<div class="section s-ask">
+	<div class="s-content">
+		<ul class="s-c-article">
+			<li>
+				<textarea class="s-c-answer" placeholder="输入您遇的问题" name="title"></textarea>
+				<div class="s-c-a-num"><p>(0/30)</p></div>
+			</li>
+			<li>
+				<a href="#" class="s-c-a-show">
+					<i class="i-s-c-arrow"></i>
+					<p>添加问题的详细描述</p>
+				</a>
+			</li>
+			<li class="hide">
+				<textarea class="s-c-answer" placeholder="问题详细描述" name="desc"></textarea>
+				<div class="s-c-a-num"><p>(0/200)</p></div>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="section s-question">
+	<div class="s-content">
+		<ul class="s-c-article">
+			<li>
+				<div class="s-a-c-label">
+					<i class="i-s-c-label"></i>
+					<p>问题标签</p>
+				</div>
+				<div class="s-a-c-input">
+					<p>正确的问题标签，会获得更准确专业的回答</p>
+					<input type="hidden" name="tags" />
+					<ul class="s-a-c-list hide"></ul>
+				</div>
+			</li>
+			<li>
+				<input type="file" id="uploadImg" class="s-a-c-file">
+				<input type="hidden" name="images" />
+				<div class="s-a-c-label">
+					<i class="i-s-c-img"></i>
+					<p>问题配图</p>
+				</div>
+				<div class="s-a-c-input">
+					<p>正确的内容配图，更容易理解问题场景</p>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="section">
+	<div class="s-content">
+		<ul class="s-c-article">
+			<li>
+				<div class="s-a-c-label">
+					<i class="i-s-c-notice"></i>
+					<p>答案通知</p>
+				</div>
+				<div class="s-a-c-input">
+					<input type="text" placeholder="手机号/邮箱" name="data_notice">
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="float-wrap tagdiv hide">
+	<div class="header">
+		<div class="h-t-warp hide">
+			<i class="i-h-back"></i>
+			<i class="i-h-title"></i>
+			<i class="i-h-t-search"></i>
+		</div>
+		<div class="h-s-warp">
+			<div class="h-s-i-warp">
+				<i class="i-h-i-search"></i>
+				<input type="text" class="h-s-input taginp" placeholder="正确的标签，将会获得更准确专业的回答">
+				<a href="#" class="h-s-clear"><i class="i-h-clear"></i></a>
+			</div>
+			<a href="#" class="h-s-cancle">取消</a>
+		</div>
+	</div>
+	<div class="section s-search">
+		<div class="s-content">
+			<ul class="s-c-article taglist"></ul>
+		</div>
+	</div>
+</div>
+</form>

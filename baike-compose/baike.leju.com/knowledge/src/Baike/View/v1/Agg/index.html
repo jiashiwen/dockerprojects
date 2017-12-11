@@ -1,0 +1,85 @@
+<div class="ty_content clearfix">
+	<notempty name="binds.parent">
+		<div class="ty_bread">
+			<a target="_blank" href="<?php echo url('index', array(), 'pc', 'baike'); ?>" title="房产百科">房产百科</a><i></i>
+			<a class="on">{$binds.parent}</a>
+		</div>
+	</notempty>
+
+	<div class="ty_left z_side">
+		<div class="b_right ty_bright">
+			<h2>{$binds.nav.pname}<i></i></h2>
+			<div class="ty_slid">
+				<volist name="result.nav.son" id="cc">
+					<h3>{$cc.name}<i></i></h3>
+					<p>
+						<volist name="cc.son" id="ccc">
+							<a href="<?php echo url('cate', array('id'=>$ccc['id'], 'page'=>1), 'pc', 'baike');?>">{$ccc.name}</a>
+						</volist>
+					</p>
+				</volist>
+			</div>
+		</div>
+	</div>
+	<div class="ty_right">
+		<h2 class="ty_tit">
+			<i></i><span>标签 “<strong style="color:red;">{$binds.parent}</strong>” 相关知识</span>
+		</h2>
+		<div class="ty_list">
+		<notempty name="list">
+		   <ul>
+			<volist name="list" id="item">
+				<li>
+					<div class="pic">
+						<a target="_blank" href="<?php echo url('show', array('id'=>$item['id']), 'pc', 'baike');?>">
+							<img src="{$item.cover|changeImageSize=###, 208, 156}" alt="{$item.title}">
+						</a>
+						<a href="<?php echo url('cate', array('id'=>$item['cateid'], 'page'=>1), 'pc', 'baike');?>" class="z_lab" target="_blank">{$item.catename}</a>
+					</div>
+					<div class="z_r">
+					<h3><a href="<?php echo url('show', array('id'=>$item['id']), 'pc', 'baike');?>">{$item.title}</a></h3>
+					<p class="pc">{$item.content}</p>
+					<p class="pa">
+						<volist name="item.tagsinfo" id="t">
+							<a href="<?php echo url('agg', array('tag'=>$t['id'], 'id'=>$cateid, 'page'=>1), 'pc', 'baike');?>">{$t.name}</a>
+						</volist>
+					</p>
+					</div>
+				</li>
+			</volist>
+			</ul>
+		<else />
+			<div class="ty_noneknow">
+				<i class="ty_NKIcon"></i>
+				<p>我考虑一下放什么内容好，你先看看其他栏目内容</p>
+			</div>
+		</notempty>
+		</div>
+		<gt name="result.maxpage" value="0">
+		<div class="ty_pages clearfix">
+			<notempty name="pager.prev">
+			<a class="pre" href="{$pager.prev}"><&nbsp;&nbsp;上一页</a>
+			</notempty>
+			<eq name="pager.sp_before" value="true">
+				<em>...</em>
+			</eq>
+			<foreach name="pager.list" item="vo" key="k" >
+				<eq name="pager.page" value="$vo.num">
+					<a class="fbtn on">{$vo.num}</a>
+					<else/>
+					<a class="ebtn" href="{$vo.url}">{$vo.num}</a>
+				</eq>
+			</foreach>
+			<eq name="pager.sp_after" value="true">
+				<em>...</em>
+			</eq>
+			<notempty name="pager.next">
+			<a class="next" href="{$pager.next}">下一页&nbsp;&nbsp;></a>
+			</notempty>
+			<span>共{$result.maxpage}页</span>
+		</div>
+		</gt>
+	</div>
+</div>
+
+<include file="Public:cateonfoot" />

@@ -1,0 +1,77 @@
+<include file="Public:search" />
+
+<div class="sWrap">
+	<div class="sCrumbs">
+		<a href="/">问答首页</a><span>\</span><a href="/profile/">我的问答</a><span>\</span><a class="cur"><?php echo $columns[$current]['title']; ?></a>
+	</div>
+
+	<div class="clearfix">
+
+		<div class="sLbox">
+			<div class="sTit">{$config.title}<span></span></div>
+			<?php if ( $current=='todo' && $userdata['i_needanswer']>0 && $todo ) { ?>
+			<ul class="sAsk_list01">
+				<include file="Public:todo.list" />
+			</ul>
+			<hr>
+			<?php } ?>
+
+			<ul class="sAsk_list01">
+				<include file="Public:list" />
+			</ul>
+			<include file="Public:pager" />
+		</div>
+
+		<div class="sRbox">
+			<!--头像star-->
+			<div class="sUser_box">
+				<img src="{$userinfo.headurl|changeImageSize=###, 104, 104}">
+				<div class="name">{$userinfo.username}</div>
+				<div class="numBox clearfix">
+					<div class="num">
+						<em>{$stats.questions}</em>
+						<span>问题</span>
+					</div>
+					<i></i>
+					<div class="num">
+						<em>{$stats.answers}</em>
+						<span>回答</span>
+					</div>
+					<i></i>
+					<div class="num">
+						<em>{$stats.attentions}</em>
+						<span>关注</span>
+					</div>
+				</div>
+			</div>
+			<!--菜单star-->
+			<ul class="sUser_menu">
+			<?php
+			$inx = 0;
+			foreach ( $columns as $columnid => $item ) {
+				$li_class = '';
+				if ( $columnid == $current ) {
+					if ( $columnid=='todo' && $userdata['i_needanswer']>0 ) {
+						$li_class = '<i></i>';
+					}
+			?>
+				<li class="cur"><a href="javascript:;">{$item.title}{$li_class}</a></li>
+			<?php
+				} else {
+					if ( $columnid=='attentions' && $userdata['i_updated']>0 ) {
+						$li_class = '<i></i>';
+					}
+					if ( $columnid=='todo' && $userdata['i_needanswer']>0 ) {
+						$li_class = '<i></i>';
+					}
+			?>
+				<li><a href="<?php echo url('profile', array($columnid), 'pc', 'ask'); ?>">{$item.title}{$li_class}</a></li>
+			<?php
+				}
+				$inx++;
+			}
+			?>
+			</ul>
+		</div>
+	</div>
+</div>

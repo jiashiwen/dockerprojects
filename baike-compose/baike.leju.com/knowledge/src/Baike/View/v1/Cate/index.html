@@ -1,0 +1,176 @@
+<div class="ty_content clearfix">
+	<notempty name="binds.bread">
+	<div class="ty_bread z_bread">
+		{$binds.bread}
+	</div>
+	</notempty>
+	<div class="ty_left z_side">
+		<div class="b_right ty_bright">
+			<h2>{$binds.nav.pname}<i></i></h2>
+			<div class="ty_slid">
+				<volist name="binds.nav.son" id="cc">
+					<h3>{$cc.name}<i></i></h3>
+					<p>
+						<volist name="cc.son" id="ccc">
+							<a href="<?php echo url('cate', array('id'=>$ccc['id'], 'page'=>1), 'pc', 'baike');?>"><eq name="ccc.id" value="$custom_id"><strong style="color:#df1830;">{$ccc.name}</strong><else/>{$ccc.name}</eq></a>
+						</volist>
+					</p>
+				</volist>
+			</div>
+
+			<?php /* 新房 */ if ( $binds['nav']['pid'] == 1 ) { ?>
+			<div class="ty_slid">
+				<h3><a href="javascript:;">特色新房</a><a href="{$extra.features.moreurl}" class="z_more">更多</a></h3>
+				<p>
+				<?php foreach ( $extra['features']['list'] as $i => $item ) { ?>
+				<a href="{$item.url}">{$item.name}</a>
+				<?php } ?>
+				</p>
+			</div>
+			<div class="ty_slid">
+				<h3><a href="javascript:;">免费专车看房</a><a href="{$extra.cars.moreurl}" class="z_more">更多</a></h3>
+				<ul class="z_house_list">
+					<?php foreach ( $extra['cars']['list'] as $i => $car ) { ?>
+					<li>
+						<h4><a href="{$car.url}" target="_blank">{$car.name}</a></h4>
+						<h5>
+							<span class="info">
+								<a href="{$car.url}" target="_blank" class="name">{$car.district_name}</a>|
+								<i>{$car.price_display}</i>
+							</span>
+							<a href="{$car.url}" target="_blank" class="btn">预约</a>
+						</h5>
+					</li>
+					<?php } ?>
+				</ul>
+			</div>
+			<?php } // end 新房 ?>
+
+			<?php /* 二手房 */ if ( $binds['nav']['pid'] == 2 ) { 
+				//echo '<!--', PHP_EOL, var_export($extra, true), PHP_EOL, '-->', PHP_EOL;
+			?>
+			<?php /* 二手房-买房 */ if ( $catepath[2]==64 ) { ?>
+			<div class="ty_slid">
+				<h3><a href="javascript:;">买房搜索</a><a href="{$extra.search.moreurl}" target="_blank" class="z_more">更多</a></h3>
+				<p>
+				<?php
+				foreach ( $extra['search']['list'] as $group_type => $group ) {
+					foreach ( $group as $_i => $item ) {
+				?>
+					<a href="{$item.url}" data-type="{$group_type}" target="_blank">{$item.name}</a>
+				<?php
+					}
+				}
+				?>
+				</p>
+			</div>
+			<div class="ty_slid">
+				<h3><a href="javascript:;">小区排行</a><a href="{$extra.homerank.moreurl}" target="_blank" class="z_more">更多</a></h3>
+				<ul class="z_rank_list">
+				<?php foreach ( $extra['homerank']['list'] as $i => $item ) { ?>
+					<li>
+						<span class="info">
+							<a href="{$item.url}" target="_blank" class="name">{$item.communityname}</a>
+							<a href="{$item.url}" target="_blank" class="address">{$item.district}-{$item.block}</a>
+						</span>
+						<a href="{$item.url}" target="_blank" class="num">{$item.salecount}套</a>
+					</li>
+				<?php } ?>
+				</ul>
+			</div>
+			<?php } // end 二手房-买房 ?>
+
+			<?php /* 二手房-租房 */ if ( $catepath[2]==66 ) { ?>
+			<div class="ty_slid">
+				<h3><a href="javascript:;">租房搜索</a><a href="{$extra.search.moreurl}" target="_blank" class="z_more">更多</a></h3>
+				<p>
+				<?php
+				foreach ( $extra['search']['list'] as $group_type => $group ) {
+					foreach ( $group as $_i => $item ) {
+				?>
+					<a href="{$item.link}" data-type="{$group_type}" target="_blank">{$item.name}</a>
+				<?php
+					}
+				}
+				?>
+				</p>
+			</div>
+			<div class="ty_slid">
+				<h3><a href="javascript:;">工作聚集</a><a href="{$extra.work.moreurl}" target="_blank" class="z_more">更多</a></h3>
+				<ul class="z_rank_list">
+				<?php foreach ( $extra['work']['list'] as $i => $item ) { ?>
+					<li>
+						<span class="info">
+							<a href="{$item.url}" target="_blank" class="name">{$item.block}</a>
+							<a href="{$item.url}" target="_blank" class="address">{$item.district}</a>
+						</span>
+						<a href="{$item.url}" target="_blank" class="num">{$item.count}套</a>
+					</li>
+				<?php } ?>
+				</ul>
+			</div>
+			<?php } // end 二手房-租房 ?>
+			<?php } // end 二手房 ?>
+		</div>
+	</div>
+	<div class="ty_right">
+		<h2 class="ty_tit">
+			<i></i><span>{$binds.cate}</span>
+		</h2>
+		<div class="ty_list">
+		<notempty name="list">
+			<ul>
+			<volist name="list" id="item">
+				<li>
+					<div class="pic">
+						<a target="_blank" href="<?php echo url('show', array('id'=>$item['id']), 'pc', 'baike');?>">
+							<img src="{$item.cover|changeImageSize=###, 208, 156}" alt="{$item.title}">
+						</a>
+						<a href="<?php echo url('cate', array('id'=>$item['cateid'], 'page'=>1), 'pc', 'baike');?>" class="z_lab" target="_blank">{$item.catename}</a>
+					</div>
+					<div class="z_r">
+					<h3><a target="_blank" href="<?php echo url('show', array('id'=>$item['id']), 'pc', 'baike');?>">{$item.title}</a></h3>
+					<p class="pc">{$item.content}</p>
+					<p class="pa">
+						<volist name="item.tagsinfo" id="t">
+							<a target="_blank" href="<?php echo url('agg', array('tag'=>$t['id'], 'id'=>$cateid, 'page'=>1), 'pc', 'baike');?>">{$t.name}</a>
+						</volist>
+					</p>
+					</div>
+				</li>
+			</volist>
+			</ul>
+		<else />
+			<div class="ty_noneknow">
+				<i class="ty_NKIcon"></i>
+				<p>我考虑一下放什么内容好，你先看看其他栏目内容</p>
+			</div>
+		</notempty>
+		</div>
+		<gt name="binds.total" value="0">
+		<div class="ty_pages clearfix">
+			<notempty name="pager.prev">
+			<a class="pre" href="{$pager.prev}"><&nbsp;&nbsp;上一页</a>
+			</notempty>
+			<eq name="pager.sp_before" value="true">
+				<em>...</em>
+			</eq>
+			<foreach name="pager.list" item="vo" key="k" >
+				<eq name="pager.page" value="$vo.num">
+					<a class="fbtn on">{$vo.num}</a>
+					<else/>
+					<a class="ebtn" href="{$vo.url}">{$vo.num}</a>
+				</eq>
+			</foreach>
+			<eq name="pager.sp_after" value="true">
+				<em>...</em>
+			</eq>
+			<notempty name="pager.next">
+			<a class="next" href="{$pager.next}">下一页&nbsp;&nbsp;></a>
+			</notempty>
+			<span>共{$binds.total}页</span>
+		</div>
+		</gt>
+	</div>
+</div>
+<include file="Public:cateonfoot" />

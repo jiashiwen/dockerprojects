@@ -1,0 +1,36 @@
+<div class="content_wrapper sort_page {$jsflag}">
+	<div class="b_wrapper">
+		<h2 class="b_title">{$binds.parent}</h2>
+		<div class="b_cardBox">
+			<notempty name="l.topKB">
+			<div class="b_card clearfix">
+				<div class="b_left">
+					<a href="{$l.topKB.url}"><h2>{$l.topKB.title}</h2></a>
+					<h3>
+					<volist name="l.topKB.tags" id="t">
+						<a href="<?php echo url('agg', array($t), 'touch', 'baike');?>"><span>{$t}</span></a>
+					</volist>
+					</h3>
+					<!--<h4>乐居互联网  05-12</h4>-->
+				</div>
+				<div class="b_right"><img src="{$l.topKB.cover|changeImageSize=###, 240, 180}" alt="{$l.topKB.title}"></div>
+			</div>
+			</notempty>
+			<volist name="list" id="item">
+			<div class="b_card clearfix">
+				<div class="b_left">
+					<h2><a href="{$item.url}">{$item.title}</a></h2>
+					<h3>
+						<volist name="item.tags" id="t">
+						<a href="<?php echo url('agg', array($t), 'touch', 'baike');?>"><span>{$t}</span></a>
+						</volist>
+					<h4>乐居互联网  {$item.ctime}</h4>
+				</div>
+				<div class="b_right"><img src="{$item.cover|changeImageSize=###, 240, 180}" alt=""></div>
+			</div>
+			</volist>
+			<div class="b_loading none"></div>
+		</div>
+	</div>
+	<a href="#" class="b_top"></a>
+</div>

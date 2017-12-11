@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>{$pageinfo.seo_title}</title>
+	<meta name="keywords" content="{$pageinfo.keywords}"/>
+	<meta name="description" content="{$pageinfo.description}" />
+    <link rel="alternate" media="only screen and (max-width: 640px)" href="{$pageinfo.alt_url}">
+	<link rel="stylesheet" href="//cdn.leju.com/qapc/styles/styles.css?20170718">
+	<script type="text/javascript" src="//cdn.leju.com/encypc/js/fullPage/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+	<include file="Public:header" />
+	{__CONTENT__}
+	<include file="Public:footer" />
+<script type="text/javascript">
+	var city = '{$city.en}';
+	var level1_page = '{$statscode.level1_page}';
+	var level2_page = '{$statscode.level2_page}';
+	var level3_page = '{$statscode.level3_page}';
+	var custom_id = '{$statscode.custom_id}';
+	var news_source='{$statscode.news_source}';
+</script>
+<script>
+(function(){
+	var bp = document.createElement('script');
+	var curProtocol = window.location.protocol.split(':')[0];
+	if (curProtocol === 'https'){
+		bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+	} else {
+		bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	}
+	var s = document.getElementsByTagName("script")[0];
+	s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script type="text/javascript" src="//cdn.leju.com/lejuTj/gather.pc.source.js"></script>
+<script type="text/javascript" src="//cdn.leju.com/encyclopedia/js/Controls/template.js"></script>
+<script type="text/javascript" src="//cdn.leju.com/qapc/js/fullPage/plugSuggest.js"></script>
+<script type="text/javascript" src="//cdn.leju.com/qapc/js/qapc.js?20170718"></script>
+<script type="text/javascript" src="//cdn.leju.com/sso/lj_lgbox.js?_=3.141592653"></script>
+</body>
+</html>

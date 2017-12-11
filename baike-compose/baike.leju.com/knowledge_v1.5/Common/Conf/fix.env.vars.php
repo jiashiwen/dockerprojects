@@ -1,0 +1,20 @@
+<?php
+// 修正命令行下的变量错误
+$_SERVER['PATH_THINKPHP'] = $_ENV['PATH_THINKPHP'];
+$_SERVER['PATH_RUNTIME'] = $_ENV['PATH_RUNTIME'];
+
+// Redis Server Config
+$_SERVER['REDIS_HOST'] = $_ENV['REDIS_HOST'];
+$_SERVER['REDIS_PORT'] = $_ENV['REDIS_PORT'];
+$_SERVER['REDIS_AUTH'] = $_ENV['REDIS_AUTH'];
+$_SERVER['REDIS_DB'] = $_ENV['REDIS_DB'];
+
+// ElasticSearch Server Config
+$_SERVER['JAVA_SEARCH_SERVICE'] = $_ENV['JAVA_SEARCH_SERVICE'];
+
+// MySQL Database Server Config
+$_SERVER['DB_HOST'] = $_ENV['DB_HOST'];
+$_SERVER['DB_PORT'] = $_ENV['DB_PORT'];
+$_SERVER['DB_NAME'] = $_ENV['DB_NAME'];
+$_SERVER['DB_USER'] = $_ENV['DB_USER'];
+$_SERVER['DB_PASS'] = $_ENV['DB_PASS'];

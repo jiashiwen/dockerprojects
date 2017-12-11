@@ -1,0 +1,73 @@
+<body>
+<div class="ty_content clearfix">
+    <div class="ty_left">
+        <div class="b_right ty_bright">
+            <h2>百科导航<i></i></h2>
+            <div class="ty_slid">
+                <volist name="binds.nav.son" id="cc">
+                    <h3>{$cc.name}<i></i></h3>
+                    <p>
+                        <volist name="cc.son" id="ccc">
+                            <a target="_blank" href="<?php echo url('cate', array('id'=>$ccc['id'], 'city'=>$city['code'], 'page'=>1), 'pc', 'baike');?>">{$ccc.name}</a>
+                        </volist>
+                    </p>
+                </volist>
+            </div>
+        </div>
+    </div>
+    <div class="ty_right">
+        <notempty name="sortId">
+            <div class="ty_bread">
+                <a target="_blank" href="<?php echo url('index', array(), 'pc', 'baike'); ?>" title="房产百科">房产百科</a><i></i>
+                <a class="on">{$sortId}</a>
+            </div>
+        </notempty>
+        <h2 class="ty_tit">
+            <i></i><span>关键词 “<strong style="color:red;">{$sortId}</strong>” 相关知识</span>
+        </h2>
+        <div class="ty_list">
+            <ul>
+            <volist name="list" id="item">
+                <li>
+                    <a class="pic" target="_blank" href="<?php echo url('show', array('id'=>$item['id']), 'pc', 'baike');?>"><img src="{$item.cover}" alt=""></a>
+                    <div class="z_r">
+                    <h3><a target="_blank" href="<?php echo url('show', array('id'=>$item['id']), 'pc', 'baike');?>">{$item.title}</a></h3>
+                    <p class="pc">{$item.content}</p>
+                    <p class="pa">
+                        <volist name="item.tags" id="t">
+                            <a target="_blank" href="<?php echo url('agg', array('tag'=>$t, 'city'=>$city['code'], 'id'=>$cateid, 'page'=>1), 'pc', 'baike');?>">{$t}</a>
+                        </volist>
+                    </p>
+                    </div>
+                </li>
+            </volist>
+            </ul>
+        </div>
+        <gt name="binds.total" value="0">
+        <div class="ty_pages clearfix">
+            <notempty name="pager.prev">
+            <a class="pre" href="{$pager.prev}"><&nbsp;&nbsp;上一页</a>
+            </notempty>
+            <eq name="pager.sp_before" value="true">
+                <em>...</em>
+            </eq>
+            <foreach name="pager.list" item="vo" key="k" >
+                <eq name="pager.page" value="$vo.num">
+                    <a class="fbtn on">{$vo.num}</a>
+                    <else/>
+                    <a class="ebtn" href="{$vo.url}">{$vo.num}</a>
+                </eq>
+            </foreach>
+            <eq name="pager.sp_after" value="true">
+                <em>...</em>
+            </eq>
+            <notempty name="pager.next">
+            <a class="next" href="{$pager.next}">下一页&nbsp;&nbsp;></a>
+            </notempty>
+            <span>共{$binds.total}页</span>
+        </div>
+        </gt>
+    </div>
+</div>
+</body>
+</html>

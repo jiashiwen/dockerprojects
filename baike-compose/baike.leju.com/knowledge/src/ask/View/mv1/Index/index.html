@@ -1,0 +1,89 @@
+<div class="banner">
+	<img src="//cdn.leju.com/qawap/images/banner-h.jpg" alt="Banner Background">
+	<div class="b-slogan">
+		<img src="//cdn.leju.com/qawap/images/slogan.png" alt="Banner Slogan">
+	</div>
+	<div class="b-s-wrap">
+		<form action="<?php echo url('search', array(), 'touch', 'ask'); ?>" method="GET">
+		<input type="text" name="k" class="b-s-input" placeholder="输入关键词，查找您想要的答案">
+		<i class="i-b-search"></i>
+		</form>
+	</div>
+</div>
+<div class="nav">
+	<ul class="n-list">
+	<?php
+	if ( $catetree ) {
+		$i = 0;
+		foreach ( $catetree as $lv1_cateid => $lv1_cate ) {
+			$icons = array(
+				0 => 'i-n-new',
+				1 => 'i-n-shand',
+				2 => 'i-n-furn',
+				3 => 'i-n-fitm',
+			);
+	?>
+		<li>
+			<a href="<?php echo url('list', array($lv1_cateid), 'touch', 'ask').'#ln=ask_index_nav'; ?>">
+				<p>{$lv1_cate.name}</p>
+				<i class="<?php echo $icons[$i]; ?>"></i>
+			</a>
+		</li>
+	<?php
+			$i++;
+		} // end foreach catetree
+	} // end of catetree
+	?>
+	</ul>
+</div>
+<div class="section">
+	<div class="s-header"><p>精华推荐</p></div>
+	<div class="s-content">
+		<ul class="s-c-swiper">
+		<?php foreach ( $focus as $i => $item ) { ?>
+			<li>
+				<a href="<?php echo url('show', array($item['id']), 'touch', 'ask').'#ln=ask_index_tj'; ?>">
+					<img src="{$item.pic|changeImageSize=###, 276, 155}" alt="{$item.title}">
+					<div class="s-c-s-cover">
+						<p>{$item.title}</p>
+					</div>
+				</a>
+			</li>
+		<?php } ?>
+		</ul>
+	</div>
+</div>
+<div class="section">
+	<div class="s-header"><p>热门问题</p></div>
+	<div class="s-content" id="scroll_1">
+		<ul class="s-c-article">
+		<?php foreach ( $q['list'] as $i => $_q ) { ?>
+			<li>
+				<a href="{$_q.url}#ln=ask_index_rm"><p>{$_q.title}</p></a>
+				<?php if ( $_q['catepathname'] ) { ?>
+				<ul class="s-c-column hide">
+				<?php foreach ( $_q['catepathname'] as $i => $cate ) { ?>
+					<li><a href="{$cate.url}#ln=ask_index_rm">{$cate.name}</a></li>
+				<?php } ?>
+				</ul>
+				<?php } ?>
+				<div class="s-c-l-wrap">
+					<i class="i-s-label"></i>
+					<ul class="s-c-label">
+					<?php foreach ( $_q['tagsinfo'] as $i => $tag ) { ?>
+						<li><a href="{$tag.url}#ln=ask_index_rm">{$tag.name}</a></li>
+					<?php } ?>
+					</ul>
+				</div>
+			</li>
+		<?php } ?>
+		</ul>
+	</div>
+</div>
+<include file="Public:ask.button" />
+<?php if ( $q['pager']['hasnext']==1 ) { ?>
+<div class="loading">
+	<i class="i-l-loading"></i>
+	<p>加载更多</p>
+</div>
+<?php } ?>

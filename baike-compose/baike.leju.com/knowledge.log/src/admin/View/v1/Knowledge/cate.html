@@ -1,0 +1,111 @@
+<h3 class="d-title clearfix"><span>栏目管理</span></h3>
+<!-- 给当前一行的.l_main添加class：l_cur可以使当前的显示状态变为绿色 -->
+<!-- 给dd添加class：l_show，展开dd -->
+<!-- 给.l_ul的li添加class：l_show，展开.l_ul_ul -->
+<dl class="l_list">
+	<dt class="clearfix">
+		<b class="l_01">栏目名称</b>
+		<a href="javascript:;" class="l_add" data-id="0"></a>
+		<b class="l_03">操作</b>
+		<b class="l_02">显示状态</b>
+	</dt>
+	<foreach name="list" item="li" key="k">
+	<dd class=""  data-id="{$li.id}" level="1">
+		<div  class="l_main l_main01 <eq name='li.status' value='0'>l_cur</eq>">
+			<div class="l_01"><a href="JavaScript:void(0)"><i class="l_zk"></i>{$li.name}</a></div>
+			<div class="l_03">
+				<a href="JavaScript:void(0)" data-id="{$li.id}" class="l_edit"></a>
+				<a href="JavaScript:void(0)" data-id="{$li.id}" <eq name='k' value='0'>list="1"<else/>list="0"</eq> class="l_up"></a>
+				<a href="JavaScript:void(0)" data-id="{$li.id}" class="l_add"></a>
+				<a href="javascript:void(0)" data-id="{$li.id}" class="l_del"></a>
+			</div>
+			<div class="l_02">
+				<a href="JavaScript:void(0)" data-id="{$li.id}" class="l_dis"></a>
+			</div>
+		</div>
+		<notempty name="li.son">
+			<ul class="l_ul none">
+			<foreach name="li.son" item="l" key="kk">
+					<li  class="<empty name='l.son'>l_show</empty>"  level-id="{$l.id}" level="2">
+						<div class="l_main <eq name='l.status' value='0'>l_cur</eq>">
+							<div class="l_01"><a href="JavaScript:void(0)"><i class="l_zk"></i>{$l.name}</a></div>
+							<div class="l_03">
+								<a href="JavaScript:void(0)" data-id="{$l.id}" class="l_edit"></a>
+								<a href="JavaScript:void(0)" data-id="{$l.id}" <eq name='kk' value='0'>list="1"<else/>list="0"</eq> class="l_up"></a>
+								<a href="JavaScript:void(0)" data-id="{$l.id}" class="l_add"></a>
+								<a href="javascript:void(0)" data-id="{$l.id}" class="l_del"></a>
+							</div>
+							<div class="l_02">
+								<a href="JavaScript:void(0)" data-id="{$l.id}" class="l_dis"></a>
+							</div>
+						</div>
+							<notempty name="l.son">
+							<ul class="l_ul_ul none">
+							<foreach name="l.son" item="ll" key="kk">
+									<li level-id="{$ll.id}" level="3">
+										<div class="l_main <eq name='ll.status' value='0'>l_cur</eq>">
+											<div class="l_01"><a href="JavaScript:void(0)"><i class="l_zk"></i>{$ll.name}</a></div>
+
+											<div class="l_03">
+												<a href="JavaScript:void(0)" data-id="{$ll.id}" class="l_edit"></a>
+												<a href="JavaScript:void(0)" data-id="{$ll.id}" <eq name='kk' value='0'>list="1"<else/>list="0"</eq> class="l_up"></a>
+												<!-- <a href="JavaScript:void(0)" data-id="{$ll.id}" class="l_add"></a> -->
+												<a href="javascript:void(0)" data-id="{$ll.id}" class="l_del"></a>
+											</div>
+											<div class="l_02">
+												<a href="JavaScript:void(0)" data-id="{$ll.id}" class="l_dis"></a>
+											</div>
+										</div>
+									</li>
+							</foreach>
+							</ul>
+							</notempty>
+					</li>
+			</foreach>
+				</ul>
+				</notempty>
+	</dd>
+	</foreach>
+</dl>
+
+<div class="l_alert" style="display: none;">
+	<a href="JavaScript:void(0)" class="l_closeBtn">关闭</a>
+	<h3>栏目编辑</h3>
+	<form id="lanmuform">
+	<input type="hidden" data-id="" name="id" />
+	<div class="l_main clearfix">
+		<span>分类名称：</span>
+		<input type="text" name="name" id="catename" placeholder="请填写分类名称">
+		<em>*</em>
+	</div>
+	<div class="l_main clearfix">
+		<span>分类代码：</span>
+		<input type="text" name="code" id="catecode" placeholder="请填写分类代码">
+		<em>*</em>
+	</div>
+	<!--
+	<div class="l_main clearfix">
+		<span>SEO Title：</span>
+		<input type="text" id="seo_title" placeholder="请填写 SEO Title 设置">
+		<em>*</em>
+	</div>
+	<div class="l_main clearfix">
+		<span>SEO Keywords：</span>
+		<input type="text" id="seo_keywords" placeholder="请填写 SEO Keywords 设置">
+		<em>*</em>
+	</div>
+	<div class="l_main clearfix">
+		<span>SEO Description：</span>
+		<input type="text" id="seo_description" placeholder="请填写 SEO Description 设置">
+		<em>*</em>
+	</div>
+	-->
+	<div class="l_bar">
+		<input type="button" class="l_btn l_red" value="提交">
+	</div>
+	</form>
+</div>
+
+
+<script type="text/javascript" src="http://cdn.leju.com/jQuery1.8.2;encyclopedia/js/base;encyclopedia/js/Pages/lanmu_manage.js?r"></script>
+

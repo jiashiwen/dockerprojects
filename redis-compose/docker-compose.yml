@@ -1,0 +1,15 @@
+#  search.leju.com local port:8000 9000;8001 9001;8002 9002;8003 9003
+
+version: '2'
+
+services:
+  redis-baike:
+      image: registry.leju.com:5000/baseimages/redis:3.2.1
+      #command: /envconfig/initcron.sh
+      #cpuset: 0-1
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - ./redis.conf:/usr/local/etc/redis/redis.conf
+      network_mode: "host"
+      container_name: redis-baike
+  

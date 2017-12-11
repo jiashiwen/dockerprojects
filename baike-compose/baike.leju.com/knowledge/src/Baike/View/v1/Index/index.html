@@ -1,0 +1,133 @@
+
+<!-- 跟随导航条 -->
+<div class="z_fixed_menu none">
+	<div class="inner" id="menu">
+		<volist name="D.kblist" id="ls">
+            <notempty name="ls.list">
+			<a data-menuanchor="page{$i}" href="#page{$i}" <eq name='i' value='1'>class="cur"</eq>><i class="line"></i>{$ls.name}</a>
+			</notempty>
+		</volist>
+	</div>
+</div>
+<div class="ty_content clearfix">
+	<div class="z_main_pic">
+		<div class="inner clearfix">
+			<notempty name="D.rcmdlist">
+				<volist name="D.rcmdlist" id="rcmd">
+					<eq name="i" value="1">
+						<a target="_blank" href="<?php echo url('show', array('id'=>$rcmd['_id']), 'pc', 'baike');?>#wt_source=pc_fcbk_pic" class="pic1"><img src="<notempty name='rcmd._origin.rcmd_cover'>{$rcmd._origin.rcmd_cover|changeImageSize=###, 656, 492}<else/>{$rcmd._origin.cover|changeImageSize=###, 656, 492}</notempty>" alt="{$rcmd._title|str_replace='"', '&quot;', ###}" width="656" height="492"><span class="mask"></span><span class="tit"><notempty name="rcmd._origin.rcmd.title">{$rcmd._origin.rcmd.title}<else/>{$rcmd._title}</notempty></span></a>
+					</eq>
+					<eq name="i" value="2">
+						<a target="_blank" href="<?php echo url('show', array('id'=>$rcmd['_id']), 'pc', 'baike');?>#wt_source=pc_fcbk_pic" class="pic2"><img src="<notempty name='rcmd._origin.rcmd_cover'>{$rcmd._origin.rcmd_cover|changeImageSize=###, 262, 196}<else/>{$rcmd._origin.cover|changeImageSize=###, 262, 196}</notempty>" alt="{$rcmd._title|str_replace='"', '&quot;', ###}" width="262" height="196"><span class="mask"></span><span class="tit"><notempty name="rcmd._origin.rcmd.title">{$rcmd._origin.rcmd.title}<else/>{$rcmd._title}</notempty></span></a>
+					</eq>
+					<eq name="i" value="3">
+						<a target="_blank" href="<?php echo url('show', array('id'=>$rcmd['_id']), 'pc', 'baike');?>#wt_source=pc_fcbk_pic" class="pic2"><img src="<notempty name='rcmd._origin.rcmd_cover'>{$rcmd._origin.rcmd_cover|changeImageSize=###, 262, 196}<else/>{$rcmd._origin.cover|changeImageSize=###, 262, 196}</notempty>" alt="{$rcmd._title|str_replace='"', '&quot;', ###}" width="262" height="196"><span class="mask"></span><span class="tit"><notempty name="rcmd._origin.rcmd.title">{$rcmd._origin.rcmd.title}<else/>{$rcmd._title}</notempty></span></a>
+					</eq>
+					<eq name="i" value="4">
+						<a target="_blank" href="<?php echo url('show', array('id'=>$rcmd['_id']), 'pc', 'baike');?>#wt_source=pc_fcbk_pic" class="pic3"><img src="<notempty name='rcmd._origin.rcmd_cover'>{$rcmd._origin.rcmd_cover|changeImageSize=###, 534, 286}<else/>{$rcmd._origin.cover|changeImageSize=###, 534, 286}</notempty>" alt="{$rcmd._title|str_replace='"', '&quot;', ###}" width="534" height="286"><span class="mask"></span><span class="tit"><notempty name="rcmd._origin.rcmd.title">{$rcmd._origin.rcmd.title}<else/>{$rcmd._title}</notempty></span></a>
+					</eq>
+				</volist>
+			</notempty>
+		</div>
+	</div>
+	<div class="z_main_con clearfix">
+		<div class="z_main_l" id="fullpage">
+		<notempty name="D.kblist">
+			<volist name="D.kblist" id="item" key="lv2">
+                <notempty name="item.list">
+
+			<div class="section">
+				<h2 class="ty_tit">
+					<i></i><span>{$item.name}</span>
+					<volist name="item.son" id="i" key="nav3">
+                        <notempty name="i.list">
+						<em class="<gt name='nav3' value='5'>none</gt>"><a target="_blank" href="<?php echo url('cate', array('id'=>$i['id'], 'page'=>1), 'pc', 'baike');?>#wt_source=pc_fcbk_list">{$i.name}</a></em>
+						</notempty>
+					</volist>
+					<a target="_blank" href="<?php echo url('cate', array('id'=>$item['id'], 'page'=>1), 'pc', 'baike');?>#wt_source=pc_fcbk_more">更多<i></i></a>
+				</h2>
+				<!-- level 2 -->
+				<div class="ty_list" data-cid="{$item['id']}">
+					<ul>
+						<notempty name="item.list">
+					<volist name="item.list" id="i">
+						<li>
+							<a class="pic" href="<?php echo url('show', array('id'=>$i['id']), 'pc', 'baike');?>#wt_source=pc_fcbk_tp"><img src="{$i.cover|changeImageSize=###, 208, 156}" alt="{$i.title|str_replace='"', '&quot;', ###}"></a>
+							<div class="z_r">
+							<h3><a target="_blank" href="<?php echo url('show', array('id'=>$i['id']), 'pc', 'baike');?>#wt_source=pc_fcbk_bt">{$i.title}</a></h3>
+							<p class="pc">{$i.content}</p>
+							<p class="pa">
+								<foreach name="i.tagsinfo" item="t">
+									<a target="_blank" href="<?php echo url('agg', array('tag'=>$t['id'], 'id'=>$cateid, 'page'=>1), 'pc', 'baike');?>#wt_source=pc_fcbk_bq">{$t.name}</a>
+								</foreach>
+							</p>
+							</div>
+						</li>
+					</volist>
+						</notempty>
+					</ul>
+				</div>
+				<!-- level 2 end -->
+				<!--level3-->
+				<notempty name="item.son">
+				<volist name="item.son" id="ii">
+                    <notempty name="ii.list">
+
+				<div class="ty_list none ty_lists" data-cid="{$ii.id}">
+					<ul>
+					<foreach name="ii.list" item="iii" key="kv3">
+						<li>
+							<a class="pic" target="_blank" href="<?php echo url('show', array('id'=>$iii['id']), 'pc', 'baike');?>#wt_source=pc_fcbk_tp"><img src="{$iii.cover|changeImageSize=###, 208, 156}" alt="{$iii.title|str_replace='"', '&quot;', ###}"></a>
+							<div class="z_r">
+							<h3><a target="_blank" href="<?php echo url('show', array('id'=>$iii['id']), 'pc', 'baike');?>#wt_source=pc_fcbk_bt">{$iii.title}</a></h3>
+							<p class="pc">{$iii.content}</p>
+							<p class="pa">
+								<foreach name="iii.tagsinfo" item="t">
+									<a target="_blank" href="<?php echo url('agg', array('tag'=>$t['id'], 'id'=>$cateid, 'page'=>1), 'pc', 'baike');?>#wt_source=pc_fcbk_bq">{$t.name}</a>
+								</foreach>
+							</p>
+							</div>
+						</li>
+					</foreach>
+					</ul>
+				</div>
+					</notempty>
+				</volist>
+				</notempty>
+				<!--level3-->
+			</div>
+				</notempty>
+			</volist>
+		</notempty>
+		</div>
+		<div class="b_right">
+			<notempty name="D.hottag">
+				<h2>热门百科词条<i></i><span>专业术语不懂问词条</span></h2>
+				<div class="labelBox">
+					<div class="labels">
+						<foreach name="D.hottag" item="h">
+							<a target="_blank" href="<php>echo url('show', array($h['id'], $h['cateid']), 'pc', 'wiki');</php>#wt_source=pc_fcbk_rmct">{$h.title}<if condition="$h.hot gt 0"><i class="up"></i></if><if condition="$h.hot lt 0"><i class="down"></i></if></a>
+						</foreach>
+					</div>
+					<a target="_blank" href="<php>echo url('index', array(), 'pc', 'wiki');</php>#wt_source=pc_fcbk_qbfcct" class="more">全部房产词条</a>
+				</div>
+			</notempty>
+				<div class="hotbk">
+					<notempty name="D.rank">
+                <h2>热门百科知识<i></i></h2>
+                <ul class="b_list">
+                    <volist name="D.rank" id="r">
+                        <lt name="i" value="11">
+                            <li><a target="_blank" href="{$r.url}#wt_source=pc_fcbk_rmzx"><em <lt name="i" value="4">class="i01"</lt>>{$i}</em>{$r.title}</a></li>
+                        </lt>
+                    </volist>
+                </ul>
+					</notempty>
+				</div>
+		</div>
+	</div>
+</div>
+
+<include file="Public:cateonfoot" />
+<!-- 乐居统一标准 友情链接 -->
+{$common_tpl.links}

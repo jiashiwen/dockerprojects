@@ -1,0 +1,239 @@
+<include file="Public:search" />
+<div class="sWrap">
+	<div class="sCrumbs">
+		<a href="/">问答首页</a>
+		<?php
+		if ( $catecrumbs ) {
+			foreach ( $catecrumbs as $level => $cate ) {
+		?>
+		<span>\</span>
+		<a href="<?php echo url('list', array($cate['id']), 'pc', 'ask'); ?>">{$cate.name}</a>
+		<?php
+			} // end foreach catecrumbs
+		} // end has catecrumbs
+		?>
+		<span>\</span>
+		<a class="cur">{$question.title}</a>
+	</div>
+	<div class="clearfix">
+		<div class="sLbox ty_con">
+			<h2 class="ty_tit">{$question.title}</h2>
+			<p class="ty_detial">
+				<span class="name"><?php echo formatUsernick($question['usernick'], $question['anonymous']); ?></span>
+				<span class="date">{$question.ctime|formatQATimer}</span>
+				<span class="tab"><?php
+					$tag_ids = array();
+					if ( $question['tagsinfo'] ) {
+						foreach ( $question['tagsinfo'] as $i => $tag ) {
+							$tagid = intval(trim($tag['id']));
+							if ( $tagid===0 ) {
+								continue;
+							}
+							if ( !in_array($tagid, $tag_ids) ) {
+								array_push($tag_ids, $tagid);
+							}
+					?>
+					<a href="<?php echo url('agg', array($tagid), 'pc', 'ask'); ?>">{$tag.name}</a>
+					<?php
+						}
+					} ?><input type="hidden" id="alltags" value="<?php echo implode(',', $tag_ids); ?>"></span>
+				<?php
+				// 提问者与当前用户同一个人时，隐藏关注功能
+				if ( $question['userid']!=$userid ) {
+					if ( $attentioned ) {
+				?>
+					<span class="focus on" data-qid="{$question.id}">已关注</span>
+				<?php } else { ?>
+					<a class="focus" href="javascript:;" data-qid="{$question.id}">关注问题</a>
+				<?php
+					}
+				}
+				?>
+			</p>
+			<p class="ty_text">{$question.desc}</p>
+			<?php if ( intval($question['i_images'])>0 && trim($question['data']['cover'])!='' ) { ?>
+			<img class="bigimg" style="height:100px" src="{$question.data.cover}" alt="">
+			<?php } ?>
+
+			<?php
+			// 允许回答
+			// var_dump($can_reply);
+			if ( $can_reply ) { ?>
+			<div class="ty_answer">
+				 <i class="faq"></i>
+				 <p class="p1">这个问题你会回答吗？</p>
+				 <p class="p2">如果你知道问题的答案，不如花几分钟帮助他~</p>
+				 <em class="answer_btn"><i></i>点击回答</em>
+			</div>
+			<div class="ty_answer_area none">
+				<i class="top"></i>
+				<textarea id="qa_textarea" cols="30" rows="10" placeholder="输入您的答案"></textarea>
+				<input class="submit" id="qa_submit" type="submit" value="提交">
+			</div>
+			<?php } ?>
+
+			<?php
+			// 显示最佳答案 已采纳
+			if ( $best ) { ?>
+			<div class="sTit tyTit">
+				<i class="best"></i>最佳答案
+				<span></span>
+			</div>
+			<div class="ty_answer_best" data-qid="{$best.qid}" data-aid="{$best.id}">
+				<i class="yin"></i>
+				<p class="p1">{$best.reply}</p>
+				<p class="detial"><span><?php echo formatUsernick($best['usernick'], $best['anonymous']); ?></span>发布于{$best.ctime|formatQATimer}</p>
+				<?php if ( $professor ) { ?>
+				<div class="person_card">
+					<img src="{$professor.detail}" />
+						<a class="ask" href="/ask/?id={$professor.id}">向他提问</a>
+				</div>
+				<?php } ?>
+			</div>
+			<?php } // end is best ?>
+			<?php if ( !$best ) { ?>
+			<div class="sTit tyTit none">
+				<i class="best"></i>最佳答案
+				<span></span>
+			</div>
+			<?php } ?>
+
+
+			<?php
+			// 显示最新答案列表
+			if ( $answers ) { ?>
+			<div class="sTit tyTit2">
+				最新答案
+				<span></span>
+			</div>
+			<ul class="ty_answer_newest">
+			<?php foreach ( $answers as $i => $answer ) { ?>
+				<li data-qid="{$answer.qid}" data-aid="{$answer.id}">
+					<p class="text">{$answer.reply}</p>
+					<p class="nb">
+						<span class="left"><em class="name"><?php echo formatUsernick($answer['usernick'], $answer['anonymous']); ?></em>回答了问题<em class="time">{$answer.ctime|formatQATimer}</em></span>
+						<span class="right">
+							<?php
+							$qz_uid = intval($question['userid']);
+							$userid = intval($userid);
+							if ( !$has_best && $qz_uid>0 && $userid==$qz_uid ) { ?>
+							<a class="set qa_best" href="javascript:;">设为最佳答案</a>
+							<?php } ?>
+
+							<?php
+							// <!-- 已点击状态加类on -->
+							if ( array_key_exists($answer['id'], $goods) ) {
+								$itemclass = ' on';
+							} else {
+								$itemclass = '';
+							}
+							?><span class="value{$itemclass} qa_good"><i></i>有用 {$answer.i_good}</span>
+						</span>
+					</p>
+				</li>
+				<?php } // end answers list loop ?>
+			</ul>
+			<?php } ?>
+			<?php if ( !$answers ) { ?>
+			<div class="sTit tyTit2 none">
+				最新答案
+				<span></span>
+			</div>
+			<ul class="ty_answer_newest none">
+			</ul>
+			<?php } ?>
+
+			<?php
+			// 如果问题有相关标签，用问题的标签聚合相关知识信息
+			if ( $question['tagsinfo'] ) { ?>
+			<!-- 相关知识 -->
+			<div class="sTit">
+				相关知识
+				<div class="fr">
+				<?php if ( count($tag_ids) > 1 ) { ?>
+					<a class="change" href="#wt_source=pc_qa_hyh"><i></i>换一换</a>
+				<?php } ?>
+				</div>
+				<span></span>
+			</div>
+			<div class="ty_knowledge">
+				<ul>
+				<?php foreach ( $guess as $i => $item ) { ?>
+					<li>
+						<a href="{$item.url}#wt_source=qa_info_kd" target="_blank">
+							<?php if ( $item['cover'] ) { ?>
+							<img src="{$item.cover|changeImageSize=###, 208, 158}">
+							<?php } else { ?>
+							<img src="//cdn.leju.com/qapc/images/temp/ty_temp1.png">
+							<?php } ?>
+							<span class="bar"></span>
+							<h4>{$item.title}</h4>
+						</a>
+					</li>
+				<?php } ?>
+				</ul>
+			</div>
+			<?php } ?>
+		</div>
+		<div class="sRbox">
+		<?php
+		// 相关问题
+		if ( $relquestions ) { ?>
+			<div class="sTit">
+				相关问答
+				<span></span>
+			</div>
+			<ul class="ty_rlist">
+			<?php foreach ( $relquestions as $i => $question ) { $inx=$i+1; ?>
+				<li>
+					<a class="title" href="<?php echo url('show', array($question['id']), 'pc', 'ask'); ?>#wt_source=qa_info_xgwd" data-hits="{$question.i_replies}"><i class="question"></i>{$question.title}</a>
+					<p class="text">{$question.reply}</p>
+				</li>
+			<?php } ?>
+			</ul>
+		<?php } ?>			
+
+			<div class="sTit">
+				相关话题
+				<span></span>
+			</div>
+			<ul class="ty_rlist2">
+			<?php foreach ( $rel_tags as $i => $info ) { ?>
+				<li>
+					<p class="title"><a href="<?php echo url('agg', array($info['id']), 'pc', 'ask'); ?>" class="l">{$info.name}</a><a class="r" href="<?php echo url('agg', array($info['id']), 'pc', 'ask'); ?>">{$info.c_questions}问题</a></p>
+					<?php foreach ( $info['list'] as $ii => $q ) { ?>
+					<a class="li" href="<?php echo url('show', array($q['id']), 'pc', 'ask'); ?>">{$q.title}</a>
+					<?php } ?>
+				</li>
+			<?php } ?>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<script src="http://cdn.leju.com/stat_leju/js/Controls/stat.js"></script>
+<script>
+<?php
+$title = htmlentities($question['title']);
+$url = url('show', array($question['id']), 'pc', 'ask');
+$sysucc = strtoupper( md5( md5($title.$url.'leju.com').'leju.com') );
+?>
+var stat_data = {
+	"default":{
+		"rank":"1",
+		"click":"1",
+		"plat_key":"pc",
+		"unique_id":"{$question.id}",
+		"cate_id":"{$question.cateid}",
+		"city_en":"{$city.en}",
+		"title":"{$title}",
+		"url":"{$url}",
+		"sysucc":"{$sysucc}"
+	},
+	"app_key":"cdf8101c8230bfdaf62c9fff0224579d"
+}
+/*
+if (document.all){window.attachEvent('onload',function(){stat_xtx('default')})}//IE
+ else{window.addEventListener('load',function(){stat_xtx('default')},false);} //FireFox
+*/
+</script>

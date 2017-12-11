@@ -1,0 +1,8 @@
+#!/bin/bash
+DIR=/home/leju/baike
+cd $DIR
+docker-compose kill
+docker-compose rm -f
+docker-compose up -d
+docker-compose ps
+

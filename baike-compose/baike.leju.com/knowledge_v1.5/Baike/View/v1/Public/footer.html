@@ -1,0 +1,32 @@
+<!-- 页尾 -->
+<div class="z_bt_nav">
+    <div class="inner clearfix">
+        <volist name="cate_all" id="item">
+            <div class="nav_box">
+                <h2 class="z_title">{$item.name}<i></i></h2>
+                <div class="links clearfix">
+                    <notempty name="item.son">
+                    <volist name="item.son" id="ii">
+                        <notempty name="ii.name">
+                        <a target="_blank" href="<?php echo url('cate', array('id'=>$ii['id'], 'city'=>$city['code'], 'page'=>1), 'pc', 'baike');?>#wt_source=pc_fcbk_dh2">{$ii.name}</a>
+                        <span class="line"></span>
+                        </notempty>
+                    </volist>
+                    </notempty>
+                </div>
+            </div>
+        </volist>
+    </div>
+</div>
+<script type="text/javascript">
+    var city = '{$city.code}';
+    var level1_page = '{$level1_page}';
+    var level2_page = '{$level2_page}';
+    var level3_page = '{$level3_page}';
+    var custom_id = '{$custom_id}';
+    var news_origin = '{$news_origin}';
+    var news_source = '{$news_source}';
+</script>
+<script type="text/javascript" src="http://m.leju.com/resources/scripts/gather.pc.source.js"></script>
+<!-- 乐居统一标准 页尾 -->
+{$common_tpl.footer}

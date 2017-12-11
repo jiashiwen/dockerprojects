@@ -1,0 +1,16 @@
+#  search.leju.com-mysql 
+
+version: '2'
+
+services:
+  mysql-compose:
+      image: registry.leju.com:5000/baseimages/mysql:5.7
+      environment:
+      - MYSQL_ROOT_PASSWORD=13eQPEdi9Loq9fLS
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - ./mysql:/etc/mysql
+        - ./mysqldata:/var/lib/mysql
+      network_mode: "host"
+      container_name: mysql-baike
+  

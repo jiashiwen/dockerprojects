@@ -1,0 +1,23 @@
+<?php
+if ( $catetree ) {
+	foreach ( $catetree as $lv1_cateid => $lv1_cate ) {
+		$subcates = $lv1_cate['son'];
+		if ( !empty($subcates) ) {
+	?>
+	<div class="category">
+		<h3><a href="<?php echo url('list', array($lv1_cateid), 'pc', 'ask'); ?>#wt_source=pc_qa_kd"  target="_blank" title="{$lv1_cate.name}"><i></i>{$lv1_cate.name}</a></h3>
+		<ul class="clearfix">
+	<?php
+			foreach ( $subcates as $lv2_cateid => $lv2_cate ) {
+	?>
+			<li><a href="<?php echo url('list', array($lv2_cateid), 'pc', 'ask'); ?>#wt_source=pc_qa_kd" target="_blank">{$lv2_cate.name}</a></li>
+	<?php
+			}
+	?>
+		</ul>
+	</div>
+	<?php
+		}
+	}
+} // end of catetree
+?>

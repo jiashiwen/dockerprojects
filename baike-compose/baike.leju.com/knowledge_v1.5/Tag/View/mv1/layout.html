@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
+	<meta name="format-detection" content="telephone=no" />
+	<title>{$pageinfo.title}</title>
+	<meta name="keywords" content="{$pageinfo.keywords}"/>
+	<meta name="description" content="{$pageinfo.description}" />
+	<link rel="stylesheet" href="//{$Think.server.PS_URL}/prd/css/entry.css">
+	<script> ;(function() {fnResize(); var k = null; window.addEventListener("resize",function(){clearTimeout(k);k = setTimeout(fnResize,300);},false); function fnResize(){document.getElementsByTagName('html')[0].style.fontSize = (document.documentElement.clientWidth) / 15 + 'px';}}());</script>
+</head>
+<body class="y_bg">
+<if condition="$isAPP neq true">
+<include file="Public:header" />
+</if>
+{__CONTENT__}
+<include file="Public:footer" />
+</body>
+</html>

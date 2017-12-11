@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="applicable-device" content="mobile">
+	<title>Document</title>
+	<script type="text/javascript" src="//res.leju.com/resources/app/touch/ask/js/index.js"></script>
+	<link rel="stylesheet" href="//res.leju.com/resources/app/touch/ask/styles/styles.css">
+</head>
+<body>
+	<div class="y_searchBox">
+		<div class="y_search">
+			<a class="y_back" href="javascript:history.back();"></a>
+			<div class="y_inp">
+			<?php
+				$params = json_encode([
+					'bid'=>4,
+					'city_en'=>'quanguo',
+					'level1_page'=>$statscode['level1_page'],
+					'level2_page'=>$statscode['level2_page'],
+					'custom_id'=>$statscode['custom_id'],
+					'hid'=>'',
+					'tel1'=>'',
+					'tel2'=>'',
+					'loc_source'=>'',
+					'news_source'=>$opts['keyword'],
+				]);
+			?>
+				<input type="text" name="k" id="keyword" value="<?php echo $opts['keyword']; ?>" placeholder="请输入关键字">
+				<a class="del" id="searchBtn"></a>
+				<a class="sec" id="cancelSearch"></a>
+			</div>
+		</div>
+
+		<div class="y_scroll">
+			<ul class="y_shLIst" id="keywordList"></ul>
+		</div>
+		<?php if ( trim($opts['keyword']) == '') { // 直入页面 ?>
+		<?php } else { // 搜索结果
+			if ( empty($list) ) { // 没有结果 ?>
+		<div class="y_scroll">
+			<div class="y_dataNone">
+				<img src="//res.leju.com/resources/app/touch/ask/images/y_find.png" height="230" width="213" alt="">
+				<h2>没有搜到相关问题</h2>
+			</div>
+		</div>
+		<?php } else { // 有结果 ?>
+		<div class="y_scroll">
+			<ul class="y_shLIst01" id="searchList">
+			<?php foreach ( $list as $i => $item ) { ?>
+				<li>
+					<a href="{$item.url}#ln=touch_qiye_searchlist">
+						<div class="y_t1"><?php echo formatQASearchTitle($item['title'], $opts['keyword']); ?></div>
+						<div class="y_c1">
+							<?php if ( !empty($item['images']) ) { $image = $item['images'][0]; ?>
+							<div class="y_L">
+								<img src="{$image}" height="168" width="224" alt="{$item.title}">
+							</div>
+							<?php } ?>
+							<div class="y_R">
+								<h2><?php echo formatQASearchTitle($item['desc'], $opts['keyword']); ?></h2>
+								<h3>{$item.i_replies}回答<em>丨</em>{$item.i_good}赞</h3>
+							</div>
+						</div>
+					</a>
+				</li>
+			<?php } ?>
+			</ul>
+			<?php if ( $next ) { ?>
+			<div class="wtqsgd bgcolor">
+				<a href="javascript:;" id="getMoreBtn">查看更多</a>
+			</div>
+			<?php } ?>
+		</div>
+		<?php } // end if empty($list)
+		} ?>
+	</div>
+	<script type="text/template" id="resultTemp">
+	<literal>
+		{{~it.list:item}}
+			<li>
+				<a href="{{=item.url}}#ln=touch_qiye_searchlist">
+					<div class="y_t1">{{= item.title.replace(it.opts.keyword, '<em>' + it.opts.keyword + '</em>')}}</div>
+					<div class="y_c1">
+						{{? (item.images) && (item.images.length > 0) }}
+						<div class="y_L"><img src="{{= item.images[0]}}" height="168" width="224" alt="{{= item.title}}"></div>
+						{{?}}
+						<div class="y_R">
+							<h2>{{? (item.desc)}}{{= item.desc.replace(it.opts.keyword, '<em>' + it.opts.keyword + '</em>')}}{{?}}</h2>
+							<h3>{{= item.i_replies}}回答<em>丨</em>{{= item.i_good}}赞</h3>
+						</div>
+					</div>
+				</a>
+			</li>
+		{{~}}
+	</literal>
+	</script>
+	<script type="text/template" id="keywordTemp">
+	<literal>
+		{{~it.list:item}}
+			<li>
+				<a href="{{= item.url}}">
+					<h2>{{= item.title.replace(it.keyword, '<em>' + it.keyword + '</em>')}}</h2>
+					<h3>{{= item.i_replies}}回答</h3>
+				</a>
+			</li>
+		{{~}}
+	</literal>
+	</script>
+	<script type="text/javascript">
+		var city = '{$statscode.city}';
+		var level1_page = '{$statscode.level1_page}';
+		var level2_page = '{$statscode.level2_page}';
+		var custom_id = '{$statscode.custom_id}';
+		var news_source='{$statscode.news_source}';
+	</script>
+	<script type="text/javascript" src="//cdn.leju.com/lejuTj/gather.source.js"></script>
+	<script src="//res.leju.com/scripts/libs/zepto/v1/zepto.js"></script>
+	<script src="//res.leju.com/scripts/app/ask/v1/search_company.js"></script>
+</body>
+</html>

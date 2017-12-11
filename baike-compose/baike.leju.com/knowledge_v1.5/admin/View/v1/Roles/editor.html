@@ -1,0 +1,87 @@
+<!-- 权限编辑 -->
+<link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+<script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+  <style type="text/css">
+.zForm_item .inp{
+    padding: 0px;
+}
+  </style>
+<h3 class="d-title clearfix z_mt">
+	<span>角色权限</span>
+</h3>
+<div class="zForm">
+	<form id="role_author" action="" method="post">
+	<div class="zForm_item">
+		<label class="name">名&emsp;&emsp;称：</label>
+		<div class="item_r">
+			<div class="inp"><input type="text" name="title" value="{$role_info.name}" needed="true" <notempty name="id">disabled</notempty>></div>
+		</div>
+	</div>
+	<div class="zForm_item">
+		<label class="name">城市权限：</label>
+		<div class="pm">
+			<div class="inp ui-widget">
+				<input type="text" id="tags" cid="" placeholder="输入城市名称" style="float: left;">
+				<input type="button" class="l_btn l_red" id="getcid" value="添加" style="position:absolute;float: left;width: 70px;left: 180px;">
+				<textarea name="city" id="cid" style="display: none;"></textarea>
+			</div>
+			<notempty name='role_info.city'>
+				<foreach name="role_info.city" key='k' item='c'>
+					<a href="#" class="z_label" cid="{$k}"><i></i>{$c}</a>
+				</foreach>
+			</notempty>
+		</div>
+	</div>
+	<div class="zForm_item">
+		<label for="" class="name">权限详情：</label>
+		<div class="item_r">
+			<foreach name="auth" item="v0" >
+				<div class="dt_blk">
+						<div class="dt_hd">
+							<span class="tit">{$v0.tag}</span>
+							<eq name="v0.all" value="true">
+								<foreach name="v0.child.0.auth" item="v2" >
+									<label class="check_inp"><input type="checkbox" class="{$v0.tag_en}_{$v2.classname}_all">全|反</label>
+								</foreach>
+							</eq>
+						</div>
+					<ul>
+						<if condition="($v0.tag_en eq knowledge) AND ($v0.special eq true)">
+							<foreach name="lm" item="vm" >
+								<li>
+									<span class="tit"><i></i>{$vm.name}</span>
+									<foreach name="v0.child.0.auth" item="v2" >
+										<label class="check_inp">
+											<input type="checkbox" value="{$v0.tag_en}/{$v2.auth_id}:{$vm.id}" class="{$v0.tag_en}_{$v2.classname}_list" name="auth[]"
+											<php> if(in_array($v0['tag_en'].'/'.$v2['auth_id'].':'.$vm['id'],$authorities)){</php>checked<php>}</php>>{$v2.auth_tag}
+										</label>
+									</foreach>
+								</li>
+							</foreach>
+						<else />
+							<foreach name="v0.child" item="v1" >
+								<li>
+									<span class="tit"><i></i>{$v1.tag}</span>
+									<foreach name="v1.auth" item="v2" >
+										<label class="check_inp">
+											<input type="checkbox" value="{$v0.tag_en}/{$v2.auth_id}" class="{$v0.tag_en}_{$v2.classname}_list" name="auth[]"
+											<php> if(in_array($v0['tag_en'].'/'.$v2['auth_id'],$authorities)){</php>checked<php>}</php>>{$v2.auth_tag}
+										</label>
+									</foreach>
+								</li>
+							</foreach>
+						</if>
+					</ul>
+				</div>
+			</foreach>
+			<input type="hidden" name="id" value="{$id}">
+		</div>
+	</div>
+	<div class="b_btnBox clearfix">
+		<a href="javascript:;" class="l_btn l_grn">发布</a>
+	</div>
+	</form>
+</div>
+<script type="text/javascript" src="http://cdn.leju.com/jQuery1.8.2;encyclopedia/js/base;encyclopedia/js/Pages/add_roles.js?r"></script>
+<script src="http://cdn.leju.com/encyclopedia/js/Controls/jqueryui/jquery-ui.js"></script>

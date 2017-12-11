@@ -1,0 +1,60 @@
+html,body { height: 100%;}
+.b_body { background-color: #efefef;}
+.b_wrapper { background-color: #fff; height: 100%;}
+.b_title { border-top: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6; line-height: rem(76); font-size: rem(32); color: #333; padding-left: rem(30); position: relative; background-color: #fff; margin-top: rem(20);
+	&:before { content: ''; width: rem(10); height: rem(76); background-color: #f8203a; position: absolute; left: 0; top: 0;}
+	a { border: 1px solid #e0e0e0; font-size: rem(24); color: #000; width: rem(72); height: rem(36); float: right; margin-right: rem(30); text-align: center; line-height: rem(36); border-radius: rem(36); margin-top: rem(20);}
+}
+.b_cardBox { padding: 0 rem(30);}
+.b_card { border-bottom: 1px solid #e0e0e0; padding: rem(33) 0; background-color: #fff;
+	.b_left { width: rem(415); float: left;
+		h2 { color: #333; font-size: rem(32); line-height: rem(48); height: rem(96); overflow: hidden; margin-bottom: rem(8);}
+		h3 { margin-bottom: rem(35);line-height: rem(32); height: rem(32); overflow: hidden;
+			span { padding: 0 rem(9) 0 rem(6); background-color: #f5fbff; font-size: rem(20); line-height: rem(32); color: #3bb8de; margin-right: rem(10);}
+		}
+		h4 { color: #999; font-size: rem(22); line-height: rem(22);}
+	}
+	.b_right { width: rem(240); overflow: hidden; margin-top: rem(8); float: right;
+		img { width: rem(240); height: rem(180); border: 1px solid #e0e0e0; box-sizing: border-box;}
+	}
+}
+.b_loading { font-size: rem(24); line-height: rem(48); color: #ccc; margin-top: rem(26); text-align: center;
+	i { width: rem(30); height: rem(30); @extend %b_loading; display: inline-block; margin-right: rem(18); vertical-align: -3px; animation: loading 1s infinite; -webkit-animation: loading 1s infinite;}
+}
+.b_top {width: rem(90); height: rem(90); @extend %b_top; position: fixed; bottom: rem(120); right: rem(10);}
+
+/* 搜索结果 */
+.b_topBox,.b_topBox01 { background-color: #f8203a; height: rem(88); padding: rem(14) rem(20); box-sizing: border-box;}
+.b_searchBox { width: rem(635); background-color: #cf1027; height: rem(60); border-radius: rem(60); padding: rem(8) rem(50) 0 rem(67); box-sizing: border-box; float: left; position: relative;
+	&:before { content:''; width: rem(28); height: rem(27); position: absolute; top: rem(17); left: rem(20); @extend %bSprite; background-position: rem(-2) rem(-2);}
+	input { color: #fff; font-size: rem(28); line-height: rem(28); background-color: transparent; width: 100%;
+		&::-webkit-input-placeholder{color: #fff;}
+	}
+
+	.error { width: rem(30); height: rem(30); @extend %bSprite; background-position: rem(-40) rem(-2); position: absolute; right: rem(21); top: rem(15);}
+}
+.b_cancel { color: #fff; font-size: rem(28); line-height: rem(60); margin-left: rem(18);}
+.b_list,.b_list01 { padding-left: rem(20);
+	li { line-height: rem(88); font-size: rem(28); border-bottom: 1px solid #eaeaea;
+		a { color: #666;}
+		span { color: #f8203a;}
+	}
+}
+.b_topBox01 { color: #fff; line-height: rem(60); font-size: rem(32); padding-left: rem(30);}
+.b_list01 { padding: 0;
+	li { padding-left: rem(30);}
+}
+@keyframes loading {
+	0% {transform:rotate(0deg);}
+	25% {transform:rotate(90deg);}
+	50% {transform:rotate(180deg);}
+	75% {transform:rotate(270deg);}
+	100% {transform:rotate(360deg);}
+}
+@-webkit-keyframes loading {
+	0% {-webkit-transform:rotate(0deg);}
+	20% {-webkit-transform:rotate(90deg);}
+	50% {-webkit-transform:rotate(180deg);}
+	75% {-webkit-transform:rotate(270deg);}
+	100% {-webkit-transform:rotate(360deg);}
+}

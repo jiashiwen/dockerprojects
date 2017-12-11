@@ -1,0 +1,65 @@
+<div class="ty_content clearfix">
+	<div class="ty_bread">
+		<a target="_blank" href="<?php echo url('index', array(), 'pc', 'wiki'); ?>">房产词条</a><i></i><a class="on"><if condition="$tag">{$tag}<else/>词条列表</if></a>
+	</div>
+	<div class="b_left">
+		<h2 class="ty_tit b_tit z_mt15"><i></i><if condition="$tag">{$tag}标签<else/>词条列表</if> </h2>
+		<div class="b_con">
+			<ul class="clearfix">
+				<foreach name="list" item="item">
+				<li>
+					<a target=_blank href="<?php echo url('show', array(base64_encode($item['id'])), 'pc', 'wiki'); ?>">
+						<span class="pic"><img src="{$item.pic|changeImageSize=###,182,136}" alt=""></span>
+						<p>{$item.entry}</p>
+					</a>
+				</li>
+				</foreach>
+			</ul>
+			<notempty name="pager">
+			<div class="ty_pages clearfix b_pages">
+				<notempty name="pager.prev">
+				<a class="pre" href="{$pager.prev}"><&nbsp;&nbsp;上一页</a>
+				</notempty>
+				<eq name="pager.sp_before" value="true">
+					<em>...</em>
+				</eq>
+				<foreach name="pager.list" item="item" key="k" >
+					<eq name="pager.page" value="$item.num">
+					<a class="ebtn on" href="javascript:void(0)">{$item.num}</a>
+					<else/>
+					<a class="fbtn" href="{$item.url}">{$item.num}</a>
+					</eq>
+				</foreach>
+				<eq name="pager.sp_after" value="true">
+					<em>...</em>
+				</eq>
+				<a class="next" href="{$pager.next}">下一页&nbsp;&nbsp;></a>
+				<span>共{$pager.count}页</span>
+			</div>
+			</notempty>
+		</div>
+	</div>
+	<div class="b_right">
+		<notempty name="hot">
+		<h2>热门百科词条<i></i><span>专业术语不懂问词条</span></h2>
+		<div class="labelBox">
+			<div class="labels">
+				<foreach name="hot" item="h">
+				<a target=_blank href="<?php echo url('show', array(base64_encode($h['id'])), 'pc', 'wiki'); ?>">{$h.entry}<if condition="$h.hot gt 0"><i class="up"></i></if><if condition="$h.hot lt 0"><i class="down"></i></if></a>
+				</foreach>
+			</div>
+			<a target=_blank href="<?php echo url('index', array(), 'pc', 'wiki'); ?>" class="more">全部房产词条</a>
+		</div>
+		</notempty>
+		<notempty name="hot_know">
+		<h2>热门百科知识<i></i></h2>
+		<ul class="b_list">
+			<foreach name="hot_know" key="k" item="vo">
+			<li><a target=_blank href="<?php echo url('show', array($vo['id']), 'pc', 'baike');?>"><em <if condition="$k lt 3">class="i01"</if>>{$k+1}</em>{$vo.title}</a></li>
+			</foreach>
+		</ul>
+		</notempty>
+	</div>
+</div>
+<!-- 页尾导航 -->
+

@@ -1,0 +1,176 @@
+<include file="Public:search" />
+
+<div class="section s-question">
+	<div class="s-content">
+		<ul class="s-c-article">
+			<li data-qid="{$question.id}">
+				<a href="#">
+					<p>{$question.title}</p>
+				</a>
+				<div class="s-c-desc">
+					<p>{$question.desc}</p>
+					<a href="javascript:;" class="s-c-d-btn">
+						展开所有
+						<i class="i-s-a-show"></i>
+					</a>
+				</div>
+				<?php if ( intval($question['i_images'])>0 && $question['data']['cover']!='' ) { ?>
+				<div class="s-c-img" id="js-s-c-img">
+					<img src="{$question.data.cover}">
+				</div>
+				<?php } ?>
+				<div class="s-c-info">
+					<div class="s-c-i-name"><?php if ( $question['anonymous']==1 ) { ?>乐居网友<?php } else { ?>{$question.usernick|default='乐居网友'}<?php } ?></div>
+					<div class="s-c-i-time">{$question.ctime|date='Y年m月d日', ###}</div>
+					<?php if ( $attentioned ) { ?>
+					<a href="javascript:;" data-qid="{$question.id}" class="s-c-i-best">已关注</a>
+					<?php } else { ?>
+					<a href="javascript:;" data-qid="{$question.id}" class="s-c-i-best">关注问题</a>
+					<?php } ?>
+				</div>
+				<?php
+				if ( $question['tagsinfo'] ) {
+					$tag_ids = array();
+					foreach ( $question['tagsinfo'] as $i => $tag ) {
+						$tagid = intval(trim($tag['id']));
+						if ( $tagid===0 ) {
+							continue;
+						}
+						if ( !in_array($tagid, $tag_ids) ) {
+							array_push($tag_ids, $tagid);
+						}
+					}
+				?>
+				<input type="hidden" id="alltags" value="<?php echo implode(',', $tag_ids); ?>">
+				<?php } ?>
+			</li>
+			<?php if ( $can_reply ) { ?>
+			<li>
+				<div class="s-c-share">
+					<div class="s-c-s-txt1">
+						<p>这个问题你会答吗？</p>
+					</div>
+					<div class="s-c-s-txt2">
+						<p>如果你知道问题的答案，不如花几分钟帮助他！</p>
+					</div>
+					<div class="s-c-info">
+						<a href="javascript:;" class="s-c-i-best">
+							点击分享我的智慧
+						</a>
+					</div>
+				</div>
+			</li>
+			<li class="hide">
+				<textarea class="s-c-answer" placeholder="输入您答案"></textarea>
+				<div class="s-c-a-num"><p>(0/200)</p></div>
+				<a href="javascript:;" class="s-c-submit">点击提交</a>
+			</li>
+			<?php } ?>
+		</ul>
+	</div>
+</div>
+<div class="section s-detail <?php if ( !$best ) { echo 'hide'; } ?>">
+	<div class="s-header"><p>最佳答案</p></div>
+	<div class="s-content">
+		<ul class="s-c-article">
+		<?php if ( $best ) { ?>
+			<li data-qid="{$best.qid}" data-aid="{$best.id}">
+				<div class="s-c-desc">
+					<p>{$best.reply}</p>
+					<a href="javascript:;" class="s-c-d-btn hide">
+						展开所有
+						<i class="i-s-a-show"></i>
+					</a>
+				</div>
+				<div class="s-c-info">
+					<div class="s-c-i-name"><?php if ( $best['anonymous']==1 ) { ?>乐居网友<?php } else { ?>{$best.usernick|default='匿名网友'}<?php } ?></div>
+					<div class="s-c-i-time">{$best.ctime|date='Y-m-d', ###}</div>
+					<?php
+					if ( array_key_exists($best['id'], $goods) ) {
+						$itemclass = 'i-s-a-checked';
+					} else {
+						$itemclass = 'i-s-a-praise';
+					}
+					?>
+					<a href="javascript:;" class="s-c-i-praise">
+						<i class="{$itemclass}"></i>{$best.i_good}
+					</a>
+				</div>
+			</li>
+		<?php } ?>
+		</ul>
+	</div>
+</div>
+
+<div class="section s-detail <?php if ( !$answers ) { echo 'hide'; } ?>">
+	<div class="s-header"><p>最新答案</p></div>
+	<div class="s-content">
+		<ul class="s-c-article s-c-articlenew">
+		<?php if ( $answers ) { ?>
+		<?php foreach ( $answers as $i => $answer ) { ?>
+			<li data-qid="{$answer.qid}" data-aid="{$answer.id}">
+				<div class="s-c-desc">
+					<p>{$answer.reply}</p>
+					<a href="javascript:;" class="s-c-d-btn hide">
+						展开所有
+						<i class="i-s-a-show"></i>
+					</a>
+				</div>
+				<div class="s-c-info">
+					<div class="s-c-i-name"><?php if ( $answer['anonymous']==1 ) { ?>乐居网友<?php } else { ?>{$answer.usernick|default='乐居网友'}<?php } ?></div>
+					<div class="s-c-i-time">{$answer.ctime|date='Y-m-d', ###}</div>
+					<?php
+					if ( array_key_exists($answer['id'], $goods) ) {
+						$itemclass = 'i-s-a-checked';
+					} else {
+						$itemclass = 'i-s-a-praise';
+					}
+					?>
+					<a href="javascript:;" class="s-c-i-praise">
+						<i class="{$itemclass}"></i>{$answer.i_good}
+					</a>
+					<?php
+					$qz_uid = intval($question['userid']);
+					$userid = intval($userid);
+					if ( !$has_best && $qz_uid>0 && $userid==$qz_uid ) { ?>
+					<a href="javascript:;" class="s-c-i-best">设为最佳答案</a>
+					<?php } ?>
+				</div>
+			</li>
+		<?php } ?>
+		<?php } ?>
+		</ul>
+	</div>
+</div>
+
+
+<?php if ( $question['tagsinfo'] ) { ?>
+<div class="section">
+	<div class="s-header">
+		<p>相关知识</p>
+		<?php if ( count($tag_ids) > 1 ) { ?>
+		<a href="javascript:;" class="s-h-btn">换一批</a>
+		<?php } ?>
+	</div>
+	<div class="s-content">
+		<ul class="s-c-relevant">
+		<?php foreach ( $guess as $i => $item ) { if ( $i >=4 ) break;?>
+			<li>
+				<div class="s-c-r-img">
+					<a href="{$item.url}#ln=ask_info_kd">
+					<?php if ( $item['cover'] ) { ?>
+					<img src="{$item.cover|changeImageSize=###, 182, 137}">
+					<?php } else { ?>
+					<img src="//cdn.leju.com/encypc/images/temp/temp-2.jpg">
+					<?php } ?>
+					</a>
+				</div>
+				<div class="s-c-r-txt">
+					<a href="{$item.url}#ln=ask_info_kd"><p>{$item.title}</p></a>
+				</div>
+			</li>
+		<?php } ?>
+		</ul>
+	</div>
+</div>
+<?php } ?>

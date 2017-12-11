@@ -1,0 +1,30 @@
+<!-- page bar -->
+<div class="row-fluid">
+  <div class="span12">
+    <div class="pagination pagination-centered">
+      <ul>
+      <notempty name="pager.first">
+        <li><a href="{$pager.first}">首页</a></li>
+      </notempty>
+      <notempty name="pager.prev">
+        <li><a href="{$pager.prev}">上一页</a></li>
+      </notempty>
+        <if condition="$pager.sp_before eq true"><li class="disabled"><a>{$pager.spline}</a></li></if>
+      <foreach name="pager.list" item="vo" key="k" >
+      <eq name="pager.page" value="$vo.num">
+        <li class="active disabled"><a href="{$vo.url}">{$vo.num}</a></li>
+      <else/>
+        <li><a href="{$vo.url}">{$vo.num}</a></li>
+      </eq>
+      </foreach>
+        <if condition="$pager.sp_after eq true"><li class="disabled"><a>{$pager.spline}</a></li></if>
+      <notempty name="pager.next">
+        <li><a href="{$pager.next}">下一页</a></li>
+      </notempty>
+      <notempty name="pager.last">
+        <li><a href="{$pager.last}">尾页</a></li>
+      </notempty>
+      </ul>
+    </div>
+  </div>
+</div>

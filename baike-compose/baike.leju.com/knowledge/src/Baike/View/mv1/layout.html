@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
+<meta name="format-detection" content="telephone=no" />
+<title>{$pageinfo.title}</title>
+<meta name="applicable-device" content="mobile">
+<meta name="title" content="{$pageinfo.seo_title}"/>
+<meta name="keywords" content="{$pageinfo.keywords}"/>
+<meta name="description" content="{$pageinfo.description}" />
+<link rel="canonical" href="{$pageinfo.alt_url}">
+<link rel="stylesheet" href="//{$Think.server.PS_URL}/prd/css/lore.css">
+<script> ;(function() {fnResize(); var k = null; window.addEventListener("resize",function(){clearTimeout(k);k = setTimeout(fnResize,300);},false); function fnResize(){document.getElementsByTagName('html')[0].style.fontSize = (document.documentElement.clientWidth) / 15 + 'px';}}());</script>
+<script type="text/javascript">
+	var sortId = "{$sortId}";
+	var city = "{$city['code']}";
+</script>
+</head>
+<body class="l_body">
+<notempty name='info.cover'>
+<div style='margin:0 auto;width:0px;height:0px;overflow:hidden;'><img src="{$info.cover}" width='700'></div>
+</notempty>
+<input type="hidden" id="sortId" name="sortId" value="{$binds.sortid}">
+<eq name="isapp" value="notapp">
+<include file="Public:header" />
+</eq>
+{__CONTENT__}
+
+<div class="search_wrapper none b_wrapper">
+	<div class="b_topBox">
+		<a href="#" class="b_cancel fr">取消</a>
+		<div class="b_searchBox fr">
+			<form action="<?php echo url('search', array('keyword'=>''), 'touch', 'baike');?>">
+				<input type="text" placeholder="搜知识" autocomplete="off" name="keyword">
+				<a href="#" value="{$pageinfo.keyword}" class="error none"></a>
+			</form>
+		</div>
+	</div>
+	<ul class="b_list">
+		<!-- <li><a href="#"><span>恒大</span>地产</a></li> -->
+	</ul>
+</div>
+<script type="text/javascript" src="//{$Think.server.PS_URL}/prd/js/lore.js"></script>
+<script type="text/javascript">
+    var city = "{$city.stat}";
+    var level1_page = "{$level1_page}";
+    var level2_page = "{$level2_page}";
+    var custom_id = "{$custom_id}";
+    var webtype='';
+    var news_source="{$news_source}";
+</script>
+<script type="text/javascript" src="http://cdn.leju.com/lejuTj/gather.source.js"></script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</body>
+</html>

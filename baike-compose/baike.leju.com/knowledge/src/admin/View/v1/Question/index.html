@@ -1,0 +1,60 @@
+<div class="ty_content">
+	<h3 class="d-title wd-d-title clearfix">
+		<span>问答管理</span>
+	</h3>
+	<div class="wd-sec wd-sec-1">
+		<div class="wd-title">
+			问答：
+		</div>
+		<ul class="wd-list clearfix">
+			<li>
+				<div class="wd-txt-wrap">
+					<div class="wd-txt-1">问题</div>
+					<div class="wd-txt-2">{$counts.all}</div>
+					<a class="wd-txt-3" href="/Question/all">管理</a>
+				</div>
+			</li>
+			<li>
+				<div class="wd-txt-wrap">
+					<div class="wd-txt-1">待解决</div>
+					<div class="wd-txt-2">{$counts.unsolved}</div>
+				</div>
+			</li>
+			<li>
+				<div class="wd-txt-wrap">
+					<div class="wd-txt-1">已回答</div>
+					<div class="wd-txt-2">{$counts.answered}</div>
+				</div>
+			</li>
+			<li>
+				<div class="wd-txt-wrap">
+					<div class="wd-txt-1">已采纳</div>
+					<div class="wd-txt-2">{$counts.best}</div>
+				</div>
+			</li>
+			<li>
+				<div class="wd-txt-wrap">
+					<div class="wd-txt-1">待审核</div>
+					<div class="wd-txt-2">{$counts.unverified}</div>
+				</div>
+			</li>
+			<li>
+				<div class="wd-txt-wrap">
+					<div class="wd-icon-wrap-1"><i class="wd-icon wd-icon-1"></i></div>
+					<div class="wd-txt-4">7日新增问题</div>
+					<div class="wd-txt-2">{$counts.lastweek}</div>
+				</div>
+			</li>
+			<li>
+				<div class="wd-txt-wrap">
+					<div class="wd-icon-wrap-2"><i class="wd-icon-6"></i></div>
+					<div class="wd-txt-5" data-href="/Question/statistic">查看数据统计</div>
+				</div>
+			</li>
+		</ul>
+		<div style="width: 1000px;height: 500px;" id="qaecharts" data-href="/Question/statistic"></div>
+	</div>
+</div>
+
+<script src="http://cdn.leju.com/queue/js/echarts.common.min.js"></script>
+<script type="text/javascript" src="http://cdn.leju.com/jQuery1.8.2;encyclopedia/js/base;encyclopedia/js/Pages/homeqa.js?r"></script>

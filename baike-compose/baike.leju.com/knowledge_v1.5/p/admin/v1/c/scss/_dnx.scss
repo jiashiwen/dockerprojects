@@ -1,0 +1,109 @@
+.d-title{
+	padding-bottom: 10px;border-bottom:1px solid #3f3f4e;margin-top: 10px;
+	span{
+		float:left;font-size: 20px;color:#3f3f4e;font-weight: bold;margin-top: 3px;
+	}
+	.l_btn{
+		float:right;
+	}
+}
+
+.d-mt20{
+	margin-top: 20px;
+}
+
+.d-table{
+	border:1px solid #e6e6e6;color:#333;width:100%;text-align: center;box-sizing:border-box;-webkit-box-sizing:border-box;
+	th{
+		background-color: #f6f6f7;text-align: center;padding:15px 0;
+	}
+	td{
+		border-bottom:1px solid #e3eaf3;padding:15px 0;
+		span{
+			border-right:1px solid #e3eaf3;display:block;
+		}
+	}
+}
+
+.d-pages{
+	padding:15px 10px;background-color: #eff0f0;
+	em{
+		float:left;font-size: 12px;color:#000;margin-top: 5px;display:block;
+	}
+	.d-pagebox{
+		float:right;
+		a{
+			display: inline-block;width: 22px;height: 22px;text-align: center;line-height: 22px;border: 1px solid #d9dbdd;background-color: #fff;margin-left: 3px;color: #000;
+			&.d-pageBtn{
+				width:54px;
+			}
+			&.d-pageBtn-2{
+				width:42px;
+			}
+		}
+		span{
+			display: inline-block;width: 22px;height: 22px;text-align: center;line-height: 22px;background-color: #ff392a;margin-left: 3px;color: #fff;
+		}
+		.d-inp{
+			width: 40px;height: 22px;line-height: 22px;border: 1px solid #d9dbdd;margin: 0 4px;text-align: center;
+		}
+		.d-submit{
+			width: 43px;margin-left: 3px;display: inline-block;border: 1px solid #d9dbdd;text-align: center;height: 22px;line-height: 22px;color: #666;border-radius: 2px;
+		}
+	}
+}
+
+.d-imglist{
+	padding-top: 15px;
+	> li{
+		float:left;width:50%;margin-bottom: 20px;
+		h3{
+			font-size: 16px;color:#666;height:34px;line-height: 34px;border-bottom: 1px solid #e2e2e3;padding-left: 15px;
+			span{
+				border-left:2px solid #eb382c;padding-left:8px;
+			}
+		}
+		> div{
+			border:1px solid #e2e2e3;border-radius: 3px;
+			&.d-odd{
+				margin-right: 15px;
+			}
+			&.d-even{
+				margin-left: 15px;
+			}
+		}
+		.d-word{
+			background-color: #eff3f6;height:118px;padding:12px;
+		}
+	}
+}
+
+.d-wordlist{
+	width:50%;float:left;
+	ul{
+		&.d-odd{
+			padding-right: 15px;border-right: 1px solid #fff;
+		}
+		&.d-even{
+			padding-left: 15px;
+		}
+	}
+	li{
+		font-size: 14px;color:#677f91;margin-bottom: 11px;
+		p{
+			float:left;
+			em{
+				color:#bbc2c8;
+				&.d-red{
+					color:#eb382c;
+				}
+			}
+		}
+		span{
+			color:#444f63;float:right;
+			&.d-red{
+				color:#eb382c;
+			}
+		}
+	}
+}

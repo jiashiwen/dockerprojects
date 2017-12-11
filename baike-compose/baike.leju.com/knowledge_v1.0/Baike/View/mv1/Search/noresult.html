@@ -1,0 +1,23 @@
+<div class="content_wrapper {$jsflag}">
+	<div class="b_wrapper">
+		
+		<div class="y_scRes">
+			<div class="y_finde">
+				<img src="//{$Think.server.PS_URL}/images/y_img01.png" >
+				<h2>未找到与“{$pageinfo.keyword}”相关的知识。</h2>
+			</div>
+			<notempty name="list">
+			<dl class="y_scList">
+				<dt>内容中带有“{$pageinfo.keyword}”的知识</dt>
+				<volist name="list" id="item">
+					<dd>
+						<h2><a href="{$item.url}">{$item.title}</a></h2>
+						<p>{$item.content}</p>
+					</dd>
+				</volist>
+				</dd>
+			</dl>
+			</notempty>
+		</div>
+	</div>
+</div>

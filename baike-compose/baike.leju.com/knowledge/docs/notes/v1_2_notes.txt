@@ -1,0 +1,453 @@
+@Changelog 2017-04-05 10:40:00
+
+# 后台上线 
+
+## 目标主机 10.204.12.2{1,2,3}
+
+1. 修正配置文件 fastcgi 中的敏感词服务的服务配置
+
+2. 更新代码至分支 v1.2
+
+3. 重启 Docker 服务
+
+4. 更新新系统使用的数据表结构
+
+- 添加推荐支持表
+
+CREATE TABLE `recommends` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '内容推荐编号',
+  `srctype` enum('kb','qa','wiki') COLLATE utf8mb4_unicode_ci DEFAULT 'kb' COMMENT '推荐数据来源类型 kb为知识 qa为问答 wiki为百科',
+  `relid` int(10) unsigned DEFAULT '0',
+  `flag` tinyint(4) unsigned DEFAULT '0' COMMENT '推荐位置，由各业务子系统来定义',
+  `extra` mediumtext COLLATE utf8mb4_unicode_ci COMMENT '数据内容',
+  `ctime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '内容推荐时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='推荐内容数据表';
+
+- 更新问题数据表
+
+ALTER TABLE `question` ADD `anonymous` tinyint UNSIGNED NULL DEFAULT '0' COMMENT '是否匿名提问 0为正常提问 1匿名提问' AFTER `utime`;
+ALTER TABLE `question` CHANGE `is_crawl` `data` mediumtext NULL DEFAULT NULL COMMENT '其它参数数据, {is_crawl: url address, verified: text, is_notice: off/email/tel, notice: contact, images: [imageurls]}';
+ALTER TABLE `question` ADD `last_best` int(10) unsigned NULL DEFAULT '0' COMMENT '最佳答案 0为没有最佳答案' AFTER `i_replies`;
+ALTER TABLE `question` ADD `cateid` smallint UNSIGNED NULL DEFAULT '0' COMMENT '问题所在栏目' AFTER `utime`;
+ALTER TABLE `question` ADD `catepath` varchar(20) NULL DEFAULT '0-' COMMENT '问题所在栏目，一级与二级' AFTER `scope`;
+
+- 更新问题回答数据表
+
+ALTER TABLE `answers` CHANGE `is_crawl` `data` mediumtext NULL DEFAULT NULL  COMMENT '其它参数数据, {is_crawl: url address, verified: text}';
+ALTER TABLE `answers` ADD `anonymous` tinyint UNSIGNED NULL DEFAULT '0' COMMENT '是否匿名提问 0为正常提问 1匿名提问' AFTER `ctime`;
+
+- 更新问答中的数据字典值
+
+update question set `anonymous` = '1';
+update question set `status` = '11';
+
+
+
+
+现存在或待确认的问题包括
+
+1. 敏感词服务部署确认
+2. 数据重新导入，对齐数据结构
+3. 后台中的一些 页面操作流程 bug 的确认和修复
+4. 后台问答首页图表的数据统计处理逻辑
+
+
+
+====
+ssh root@192.168.99.99 -NTL 3306:localhost:3306 192.168.99.99
+docker-compose kill && docker-compose rm -f && docker-compose up -d && docker-compose ps
+
+
+
+@ TODO:
+
+问答数据结构定义
+
+数据清洗
+
+抓取数据
+
+重构百科词条功能部份
+
+修正更新
+update answers set qid = ( select id from question where _id=answers.question_id );
+
+初始导入内容均为匿名提问
+update question set `anonymous` = '1';
+
+初始化导入的问答数据均为待确认(待更新)状态
+update question set `status` = '11';
+----
+
+ALTER TABLE `categories` ADD `i_hits` bigint UNSIGNED NULL DEFAULT '0' COMMENT '统计栏目访问总数' AFTER `path`;
+
+`question`
+
+ALTER TABLE `question` CHANGE `uid` `userid` bigint(20) NOT NULL DEFAULT '0' COMMENT '提问的用户编号';
+ALTER TABLE `question` ADD `usernick` varchar(20) NOT NULL DEFAULT '' COMMENT '提问的用户昵称' AFTER `userid`;
+-- ALTER TABLE `question` ADD `notice` varchar(50) NOT NULL DEFAULT '' COMMENT '提问后，用于接收通知消息 json{t:email/tel,v:setting}' AFTER `usernick`;
+-- ALTER TABLE `question` ADD `images` text NULL DEFAULT NULL COMMENT '用户问题的配图' AFTER `scope` AFTER `scope`;
+ALTER TABLE `question` ADD `anonymous` tinyint UNSIGNED NULL DEFAULT '0' COMMENT '是否匿名提问 0为正常提问 1匿名提问' AFTER `utime`;
+ALTER TABLE `question` CHANGE `is_crawl` `data` mediumtext NULL DEFAULT NULL  COMMENT '其它参数数据, {is_crawl: url address, verified: text, is_notice: off/email/tel, notice: contact, images: [imageurls]}';
+ALTER TABLE `question` ADD `last_best` tinyint UNSIGNED NULL DEFAULT '0' COMMENT '最佳答案 0为没有最佳答案' AFTER `i_replies`;
+ALTER TABLE `question` ADD `cateid` smallint UNSIGNED NULL DEFAULT '0' COMMENT '问题所在栏目' AFTER `utime`;
+ALTER TABLE `question` ADD `catepath` varchar(20) NULL DEFAULT '0-' COMMENT '问题所在栏目，一级与二级' AFTER `scope`;
+
+
+`answers`
+
+ALTER TABLE `answers` ADD `qid` int UNSIGNED NULL DEFAULT '0' COMMENT '关联的问题编号' AFTER `id`;
+ALTER TABLE `answers` CHANGE `uid` `userid` bigint(20) NOT NULL DEFAULT '0' COMMENT '回复的用户';
+ALTER TABLE `answers` ADD `usernick` varchar(20) NOT NULL DEFAULT '' COMMENT '提问的用户昵称' AFTER `userid`;
+ALTER TABLE `answers` CHANGE `is_best` `is_best` int(10) UNSIGNED NULL DEFAULT '0'  COMMENT '是否最佳回复';
+ALTER TABLE `answers` ADD `is_top` int(10) UNSIGNED NULL DEFAULT '0' COMMENT '回复是否置顶' AFTER `is_best`;
+ALTER TABLE `answers` CHANGE `is_crawl` `data` mediumtext NULL DEFAULT NULL  COMMENT '其它参数数据, {is_crawl: url address, verified: text}';
+ALTER TABLE `answers` ADD `anonymous` tinyint UNSIGNED NULL DEFAULT '0' COMMENT '是否匿名提问 0为正常提问 1匿名提问' AFTER `ctime`;
+
+
+
+
+`member`
+
+CREATE TABLE `member (
+  `userid` bigint(20) unsigned NOT NULL COMMENT '会员系统用户编号',
+  `nick` varchar(20) NOT NULL DEFAULT '' COMMENT '会员用户昵称',
+  `avatar` varchar(255) NOT NULL DEFAULT '' COMMENT '会员头像',
+  `ctime` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '会员第一次使用问答系统的时间',
+  `utime` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '会员用户信息更新时间',
+  `email` varchar(50) NOT NULL DEFAULT '' COMMENT '接收消息的电子邮件地址',
+  `tel` varchar(20) NOT NULL DEFAULT '' COMMENT '接收消息的手机',
+  `i_question` smallint(5) unsigned DEFAULT '0' COMMENT '提问的问题总数',
+  `i_best` smallint(5) unsigned DEFAULT '0' COMMENT '获得最佳答案评价的总数',
+  `i_reply` mediumint(8) unsigned DEFAULT '0' COMMENT '回答的问题总数',
+  `i_attention` mediumint(8) unsigned DEFAULT '0' COMMENT '会员关注的问题数量',
+  PRIMARY KEY (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='会员用户数据表';
+
+
+mongodb 查询并导出数据
+var c = db.getCollection('201702_110ask').find({}).limit(100);
+while(c.hasNext()){
+    printjsononeline(c.next());
+}
+
+
+
+
+$.ajax({
+   url: '/ask/test',
+   method: 'post',
+   data: {title:'123',desc:'34566',data_notice:'1@1.com',anonymous:1,images:['123.jpg']},
+   success: function(data) {
+      console.log(data);
+    }
+})
+
+测试数据
+$data = json_encode(
+array(
+	'sensitive'=> array(
+		'type' => '色情',
+		'words' => array('测试','色情'),
+		'score' => 7,
+		'reason' => '存在色情敏感词',
+	),
+)
+);
+{"sensitive":{"type":"\u8272\u60c5","words":["\u6d4b\u8bd5","\u8272\u60c5"],"score":7,"reason":"\u5b58\u5728\u8272\u60c5\u654f\u611f\u8bcd"}}
+
+
+
+CREATE TABLE `recommends` (
+	`id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '内容推荐编号',
+	`srctype` enum('kb','qa','wiki') DEFAULT 'kb' COMMENT '推荐数据来源类型 kb为知识 qa为问答 wiki为百科',
+	`relid` int(10) unsigned DEFAULT '0',
+	`flag` tinyint(4) unsigned DEFAULT '0' COMMENT '推荐位置，由各业务子系统来定义',
+	`extra` mediumtext COMMENT '数据内容',
+	`ctime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '内容推荐时间',
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='推荐内容数据表';
+
+
+DICT
+RECOMMEND_CONFIG =>
+array(
+	'QA' => array(
+		'types' => array(
+			'focus' => array( 'name'=>'首页图片', 'max'=>10, 'flag'=>1 ),
+		),
+	),
+)
+
+tree = {
+	'182': {
+		'id': 182,
+		'name': '栏目一',
+		'path': '0-182',
+		'son': {
+			'187': {
+				'id': 187,
+				'name': '栏目1',
+				'path': '0-182-187'
+			},
+			'188': {
+				'id': 188,
+				'name': '栏目2',
+				'path': '0-182-188'
+			}
+		}
+	},
+	'183': {
+		'id': 183,
+		'name': '栏目二',
+		'path': '0-183',
+		'son': []
+	}
+}
+list = {}
+list[''] = {name: '未分配'}
+list['0-'] = {name: '未分配'}
+for ( i in tree ) {
+	list[tree[i].path] = { id: tree[i].id, name: tree[i].name, level:1 };
+	var level1 = tree[i].name
+	for ( j in tree[i].son ) {
+		list[tree[i].son[j].path] = { id: tree[i].son[j].id, name: level1 + '-' + tree[i].son[j].name, level:2 };
+	}
+}
+console.log(list)
+
+// demo 1 : cell a => 0-183
+var cell_a = '0-183'
+console.log(list[cell_a].name);
+// demo 2 : cell b => 0-182-188
+var cell_b = '0-182-188'
+console.log(list[cell_b].name);
+// demo 3 : cell c => 0-
+var cell_c = '0-'
+console.log(list[cell_c].name);
+
+// 以下是测试，只需要页面加载完成之后执行 init();
+var async_load_file = function (url) {var s = document.createElement("script"); s.type = "text/javascript"; s.src=url; document.body.appendChild(s); };  window.jQuery || async_load_file('http://libs.baidu.com/jquery/1.9.0/jquery.min.js');
+
+var init = function() {
+	var tree = JSON.parse(catetree),
+		cate1 = $('select[name="cate1"]'),
+		cate2 = $('select[name="cate2"]'),
+		cate1_selected = cate1.data('value'),
+		cate2_selected = cate2.data('value');
+
+	cate1.empty();
+	cate2.empty();
+	cate1.append('<option value="">请选择</option>');
+	cate2.append('<option value="">请选择</option>');
+	for ( i in tree ) {
+		if ( i==cate1_selected ) {
+			cate1.append('<option value="'+i+'" selected="true">'+tree[i].name+'</option>');
+			cate2.empty();
+			for ( j in tree[i].son ) {
+				if ( j==cate2_selected ) {
+					cate2.append('<option value="'+j+'" selected="true">'+tree[i].son[j].name+'</option>')
+				} else {
+					cate2.append('<option value="'+j+'">'+tree[i].son[j].name+'</option>')
+				}
+			}
+		} else {
+			cate1.append('<option value="'+i+'">'+tree[i].name+'</option>');
+		}
+	}
+	cate1.on('change', relchange);
+}
+
+var relchange = function () {
+	var tree = JSON.parse(catetree),
+		cate1 = $('select[name="cate1"]'),
+		cate2 = $('select[name="cate2"]'),
+		cate1_selected = cate1.val();
+	cate2.empty();
+	cate2.append('<option value="">请选择</option>')
+	for ( j in tree[cate1_selected].son ) {
+		cate2.append('<option value="'+j+'">'+tree[cate1_selected].son[j].name+'</option>')
+	}
+}
+
+
+问答的索引结构定义
+{
+   "question_logic": {
+      "aliases": {},
+      "mappings": {
+         "knowledge": {
+            "dynamic": "strict",
+            "_all": {
+               "enabled": false
+            },
+            "properties": {
+               "_category": {
+                  "type": "string",
+                  "index": "not_analyzed",
+                  "store": true
+               },
+               "_content": {
+                  "type": "string",
+                  "store": true,
+                  "analyzer": "ik_max_word"
+               },
+               "_deleted": {
+                  "type": "boolean",
+                  "store": true
+               },
+               "_doccreatetime": {
+                  "type": "date",
+                  "store": true,
+                  "format": "strict_date_optional_time||epoch_millis||yyyy/MM/dd HH:mm:ss||yyyy/MM/dd"
+               },
+               "_docupdatetime": {
+                  "type": "date",
+                  "store": true,
+                  "format": "strict_date_optional_time||epoch_millis||yyyy/MM/dd HH:mm:ss||yyyy/MM/dd"
+               },
+               "_hits": {
+                  "type": "integer",
+                  "store": true
+               },
+               "_multi": {
+                  "properties": {
+                     "cateid": {
+                        "type": "integer",
+                        "store": true
+                     },
+                     "catepath": {
+                        "type": "string",
+                        "store": true,
+                        "term_vector": "with_positions_offsets",
+                        "analyzer": "keyword"
+                     },
+                     "editor": {
+                        "type": "string",
+                        "store": true,
+                        "term_vector": "with_positions_offsets",
+                        "analyzer": "keyword"
+                     },
+                     "editorid": {
+                        "type": "integer",
+                        "store": true
+                     },
+                     "rcmd_time": {
+                        "type": "date",
+                        "store": true,
+                        "format": "strict_date_optional_time||epoch_millis||yyyy/MM/dd HH:mm:ss||yyyy/MM/dd"
+                     },
+                     "src_type": {
+                        "type": "integer",
+                        "store": true
+                     },
+                     "title_firstletter": {
+                        "type": "string",
+                        "store": true,
+                        "analyzer": "pinyin_first_lette_analyzer",
+                        "search_analyzer": "keyword"
+                     },
+                     "title_pinyin": {
+                        "type": "string",
+                        "store": true,
+                        "analyzer": "pinyin_analyzer"
+                     },
+                     "title_prefix": {
+                        "type": "string",
+                        "store": true,
+                        "term_vector": "with_positions_offsets",
+                        "analyzer": "keyword"
+                     }
+                  }
+               },
+               "_origin": {
+                  "type": "object",
+                  "enabled": false
+               },
+               "_scope": {
+                  "type": "string",
+                  "index": "not_analyzed",
+                  "store": true
+               },
+               "_tags": {
+                  "type": "string",
+                  "store": true,
+                  "analyzer": "whitespace"
+               },
+               "_title": {
+                  "type": "string",
+                  "store": true,
+                  "analyzer": "ik_max_word"
+               },
+               "_url": {
+                  "type": "string",
+                  "index": "no",
+                  "store": true
+               }
+            }
+         }
+      },
+      "settings": {
+         "index": {
+            "number_of_shards": "3",
+            "creation_date": "1478597489571",
+            "requests": {
+               "cache": {
+                  "enable": "true"
+               }
+            },
+            "analysis": {
+               "filter": {
+                  "my_synonym": {
+                     "type": "synonym",
+                     "synonyms_path": "../plugins/elasticsearch-analysis-ik-1.9.3/config/ik/custom/synonym.dic"
+                  }
+               },
+               "analyzer": {
+                  "searchanalyzer": {
+                     "filter": "my_synonym",
+                     "type": "custom",
+                     "tokenizer": "ik_smart"
+                  },
+                  "pinyin_first_lette_analyzer": {
+                     "filter": [
+                        "standard"
+                     ],
+                     "tokenizer": "pinyin_first_letter"
+                  },
+                  "indexanalyzer": {
+                     "filter": "my_synonym",
+                     "type": "custom",
+                     "tokenizer": "ik_max_word"
+                  },
+                  "pinyin_analyzer": {
+                     "filter": [
+                        "standard"
+                     ],
+                     "tokenizer": "pinyin_full"
+                  }
+               },
+               "tokenizer": {
+                  "pinyin_first_letter": {
+                     "padding_char": "",
+                     "type": "pinyin",
+                     "first_letter": "only"
+                  },
+                  "pinyin_full": {
+                     "padding_char": "",
+                     "type": "pinyin",
+                     "first_letter": "none"
+                  }
+               }
+            },
+            "number_of_replicas": "1",
+            "uuid": "LmNqUrUBQ92AityEbdiMpQ",
+            "version": {
+               "created": "2030399"
+            }
+         }
+      },
+      "warmers": {}
+   }
+}

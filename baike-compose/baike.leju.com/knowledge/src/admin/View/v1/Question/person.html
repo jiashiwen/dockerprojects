@@ -1,0 +1,86 @@
+<div class="ty_content">
+	<h3 class="d-title clearfix">
+		<span>人物问答 - 人物列表</span>
+	</h3>
+	<form id="searchForm" action="" method="get">
+	<div class="ty_Ctop clearfix">
+		<ul class="clearfix">
+			<li><a href="javascript:;" class="l_btn l_grn">人物管理</a></li>
+			<li>&nbsp;</li>
+			<li><a href="/Question/pnq" class="l_btn">问题管理</a></li>
+			<li>&nbsp;</li>
+			<li><a href="/Question/pna" class="l_btn">回答管理</a></li>
+		</ul>
+	</div>
+	<div class="ty_Ctop clearfix">
+		<ul class="clearfix">
+			<li>
+				<span>人物</span>
+				<?php
+				$cfg = array('class'=>'w102', 'name'=>'name', 'id'=>'',);
+				echo search_form_select($form['name'], $persons, $cfg);
+				?>
+			</li>
+			<li><span>状态</span>
+				<?php
+				$cfg = array('class'=>'w102', 'name'=>'status', 'id'=>'',);
+				echo search_form_select($form['status'], $dict['PERSON_STATUS'], $cfg);
+				?>
+			</li>
+			<li class="fr"><a href="javascript:;" class="l_btn l_red">查询</a></li>
+		</ul>
+	</div>
+	<div class="ty_list">
+		<notempty name="list">
+		<table class="d-table">
+			<thead>
+				<th>人物ID</th>
+				<th>人物名称</th>
+				<th>浏览数</th>
+				<th>关注数</th>
+				<th>问题数</th>
+				<th>回答数</th>
+				<th>状态</th>
+				<th>开启时间</th>
+				<th>操作</th>
+			</thead>
+			<tbody>
+				<foreach name="list" item="vo" key="k" >
+				<tr>
+					<td><span>{$vo.id}</span></td>
+					<td title="{$vo.title}"><span>{$vo.title}</span></td>
+					<td><span>{$vo.hits|default='-'}</span></td>
+					<td><span>{$vo.favs|default='-'}</span></td>
+					<td><span>{$vo.cntq|default='-'}</span></td>
+					<td><span>{$vo.cnta|default='-'}</span></td>
+					<td><span><?php $status = !is_null($vo['ctime']); echo $status ? '已开启' : '未开启'; ?></span></td>
+					<td><span><?php echo is_null($vo['ctime']) ? '-' : date('Y.m.d', $vo['ctime']); ?></span></td>
+					<td>
+						<p class="last">
+						<?php if ( $status ) { ?>
+						<a class="a2 ldaction" data-api="/question/pnonoff/" data-p_id="{$vo.id}" data-p_type="0" href="javascript:;">关闭</a>
+						<?php } else { ?>
+						<a class="a2 ldaction" data-api="/question/pnonoff/" data-p_id="{$vo.id}" data-p_type="1" href="javascript:;">开启</a>
+						<?php } ?>
+						</p>
+					</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<notempty name="pager">
+			<include file="Public:pager" />
+		</notempty>
+		</notempty>
+		<empty name="list">
+		<!-- 无结果 -->
+		<div class="ty_Nores">
+			您选择“条件搜索”后，<span>暂无数据</span>！
+		</div>
+		<!-- 无结果end -->
+		</empty>
+	</div>
+	</form>
+	<script type="text/javascript" src="http://cdn.leju.com/jQuery1.8.2;encyclopedia/js/base;encyclopedia/js/Pages/entry_manage.js?r"></script>
+</div>
+

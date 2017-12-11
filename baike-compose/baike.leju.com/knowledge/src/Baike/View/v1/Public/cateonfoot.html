@@ -1,0 +1,20 @@
+<!-- 页尾 -->
+<div class="z_bt_nav">
+	<div class="inner clearfix">
+		<volist name="cate_all" id="item">
+			<div class="nav_box">
+				<h2 class="z_title">{$item.name}<i></i></h2>
+				<div class="links clearfix">
+					<notempty name="item.son">
+					<volist name="item.son" id="ii">
+						<notempty name="ii.name">
+						<a target="_blank" href="<?php echo url('cate', array('id'=>$ii['id'], 'page'=>1), 'pc', 'baike');?>#wt_source=pc_fcbk_dh2">{$ii.name}</a>
+						<span class="line"></span>
+						</notempty>
+					</volist>
+					</notempty>
+				</div>
+			</div>
+		</volist>
+	</div>
+</div>

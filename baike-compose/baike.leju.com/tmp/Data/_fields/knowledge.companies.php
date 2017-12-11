@@ -1,0 +1,1 @@
+a:8:{i:0;s:7:"wiki_id";i:1;s:5:"ctime";i:2;s:4:"hits";i:3;s:4:"favs";i:4;s:4:"cntq";i:5;s:4:"cnta";s:3:"_pk";s:7:"wiki_id";s:5:"_type";a:6:{s:7:"wiki_id";s:16:"int(10) unsigned";s:5:"ctime";s:16:"int(10) unsigned";s:4:"hits";s:16:"int(10) unsigned";s:4:"favs";s:16:"int(10) unsigned";s:4:"cntq";s:16:"int(10) unsigned";s:4:"cnta";s:16:"int(10) unsigned";}}

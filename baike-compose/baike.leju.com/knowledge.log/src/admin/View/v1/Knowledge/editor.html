@@ -1,0 +1,232 @@
+<link href="http://cdn.ljimg.com/cms2.0/js/Controls/cropper-master/dist/cropper.css" rel="stylesheet" type="text/css">
+<h3 class="d-title clearfix">
+		<span>内容编辑</span>
+		<div class="b_title_r">
+			<notempty name="history">
+			<span class="tit">历史版本：</span>
+			<select class="w235" name="history">
+			<foreach name="history" key="k" item="i">
+				<option value="/Knowledge/edit?id={$list.id}&pkid={$i.pkid}" <eq name="i.pkid" value="$binds.pkid">selected="selected"</eq>> v{$histotal-$k} <?php echo $cities[$i['scope']]['cn']; ?> {$i.truename} {$i.utime|date="Y年m月d日 H:i:s",###}</option>
+			</foreach>
+			</select>
+			</notempty>
+		</div>
+	</h3>
+	<form id="docForm" asyn-action="/Knowledge/{$binds.method}" method="post">
+	<input type="hidden" name="id" value="<empty name="list.id"><else/>{$list.id}</empty>">
+
+	<div class="b_wrapper">
+		<div class="b_main">
+			<fieldset>
+				<legend>知识内容</legend>
+				<div class="b_card">
+					<span>标题： </span>
+					<div class="inpBox">
+						<select class="w120" name="src_type">
+							<option value="0"<eq name="list.src_type" value="0"> selected="true"</eq>>原创</option>
+							<option value="2"<eq name="list.src_type" value="2"> selected="true"</eq>>转载</option>
+						</select>
+						<input type="text" class="inp w285" name="title" value="{$list.title}">
+					</div>
+				</div>
+				<div class="b_card clearfix">
+					<span>摘&emsp;&emsp;要：</span>
+					<div class="inpBox07">
+						<textarea name="summary" id="summary" rows="5" cols="130" style="width:808px;height:77px;font-size:12px;">{$list.summary}</textarea>
+					</div>
+				</div>
+				<div class="b_card clearfix">
+					<span>内&emsp;&emsp;容：</span>
+					<div class="inpBox07">
+							<div class="b_editBox" id="ueditorsc">
+							</div>
+							<textarea name="content"  id="ueditor" style="display: none;"><p>{$list.content}</p></textarea>
+						</div>
+				</div>
+				<div class="b_card clearfix">
+					<span>配&emsp;&emsp;图：</span>
+					<div class="inpBox">
+						<div class="left"><img name="check_4" class="sin_preview" src="
+							<empty name="list.cover">{$binds.cdn_img_url}images/bImg01.png<else/>{$list.cover}</empty>" alt="">
+						</div>
+						<div class="right fileupload" id="picExp_upbtn">
+							<!-- <input name="cover" type="button" class="l_btn l_grn fileupload" value="点击上传图片">  -->
+							<p>请选择jpg、gif格式，小于2M的图</p>
+						</div>
+					</div>
+					<input class="imgurl" type="hidden" name="cover" value="<empty name="list.cover"><else/>{$list.cover}</empty>">
+				</div>
+				<div class="b_card">
+					<span>媒体机构：</span>
+					<div class="inpBox">
+						<input type="text" class="inp w285" name="media" 
+						value="{$list.media}">
+					</div>
+				</div>
+				<div class="b_card">
+					<span>媒体作者：</span>
+					<div class="inpBox">
+						<input type="hidden" class="inp"  name="editorid" value="{$userinfo.id}">
+						<input type="text" class="inp" name="editor" 
+						value="<empty name="list.editor">{$userinfo.truename}<else/>{$list.editor}</empty>">
+					</div>
+				</div>
+			</fieldset>
+			<hr>
+			<fieldset>
+				<legend>发布设置</legend>
+				<div class="b_card">
+					<span>城市： </span>
+					<div class="inpBox">
+						<select class="w215" name="scope">
+						<option value="">请选择</option>
+						<foreach name="cities" item="c" key="k">
+							<option value="{$c.en}" <eq name="k" value="$list.scope">selected="selected"</eq>>{$c.en|strtoupper} - {$c.cn}</option>
+						</foreach>
+						</select>
+					</div>
+				</div>
+				<div class="b_card">
+					<span>栏目： </span>
+					<div class="inpBox">
+						<select class="w120 unionAction" name="cateid1">
+							<option value="">请选择</option>
+						<foreach name="binds.roleCate" item="ac" key="k">
+							<option value="{$k}" <eq name="k" value="$binds.path.1">selected="selected"</eq>>{$ac}</option>
+						</foreach>
+						</select>
+						<select class="w120 unionAction" name="cateid2">
+							<option value="">请选择</option>
+							<foreach name="binds.level2" item="ll" key="k">
+								<option value="{$k}" <eq name="k" value="$binds.path.2">selected="selected"</eq>>{$ll}</option>
+							</foreach>
+						</select>
+						<select class="w120 unionAction" name="cateid">
+							<option value="">请选择</option>
+							<foreach name="binds.level3" item="ll" key="k">
+								<option value="{$k}" <eq name="k" value="$binds.path.3">selected="selected"</eq>>{$ll}</option>
+							</foreach>
+						</select>
+					</div>
+				</div>
+				<div class="b_card clearfix">
+					<span>定时发布：</span>
+					<div class="date inpBox07">
+						<input name="ptime" value="<notempty name='list.ptime'>{$list.ptime|date="Y-m-d H:i",###}</notempty>" type="text" class="inp w215" id="pubdate">
+						<span id="cron_pub_time" class=" "></span>
+						<i></i>
+						<em>不更改时间立即发布；选择将来时间定时发布。</em>
+					</div>
+				</div>
+				<div class="b_card clearfix">
+					<span>推&emsp;&emsp;荐：</span>
+					<div class="inpBox07">
+						<h2>
+						<input name="focus" type="checkbox" class="checkbox" <gt name="list.rcmd_time" value="0">checked="checked"</gt> >
+						<b>首页焦点图</b>
+						<input type="text" name="rcmd_title" placeholder="自定义推荐标题" class="inp" value="<notempty name='list.rcmd_title'>{$list.rcmd_title}</notempty>">
+						<img src="<empty name="list.rcmd_cover">{$binds.cdn_img_url}images/bImg02.png<else/>{$list.rcmd_cover}</empty>" class="sin_preview fileupload"  alt=""><!-- <input type="button" class="l_btn l_grn fileupload" value="自定义图片"> --> <em class="y_lh">请选择jpg、gif格式，小于2M的图<br/>默认取标题和配图，可以定义显示标题和图片</em>
+						<input class="imgurl" name="rcmd_cover" value="<empty name="list.rcmd_cover"><else/>{$list.rcmd_cover}</empty>" style="display: none;">
+					</h2>
+						<h2>
+						<input type="checkbox" class="checkbox" name="top" <gt name="list.top_time" value="0">checked="checked"</gt>><b>置顶</b>
+						<input type="text" name="top_title"  placeholder="自定义推荐标题" class="inp" value="<notempty name='list.top_title'>{$list.top_title}</notempty>">
+						<img src="<empty name="list.top_cover">{$binds.cdn_img_url}images/bImg02.png<else/>{$list.top_cover}</empty>" class="sin_preview fileupload"  alt=""><!-- <input type="button" class="l_btn l_grn fileupload"  value="自定义图片"> --><em class="y_lh">请选择jpg、gif格式，小于2M的图<br/>默认取标题和配图，可以定义显示标题和图片</em>
+						<input class="imgurl" name="top_cover" value="<empty name="list.top_cover"><else/>{$list.top_cover}</empty>" style="display: none;">
+					</h2>
+
+					</div>
+				</div>
+			</fieldset>
+			<hr>
+			<fieldset>
+				<legend>关联内容推荐</legend>
+				<div class="b_card clearfix" >
+					<span>标&emsp;&emsp;签：</span>
+					<div class="inpBox label">
+						<div class="clearfix b_form">
+						<foreach name="list.tags" key="key" item="value">
+						<em class="tag">{$value}<i></i><a class="l_btn b_del">删除</a></em>
+						</foreach>
+						<input type="text" placeholder="输入标签" class="inp w190" plugin="plugSuggest"  param="{&quot;api&quot;:&quot;/Knowledge/suggest&quot;,&quot;data&quot;:{},&quot;name&quot;:&quot;word&quot;}">
+						<input type="button" class="l_btn l_red" id="gettag" value="添加">
+						</div>
+					</div>
+					<textarea name="gettag" id="label_list" style="display: none;"></textarea>
+					<div class="b_popBox" style="display: none;">
+					</div>
+				</div>
+				<div class="b_card clearfix">
+					<span>相关资讯：</span>
+					<div class="inpBox07">
+						<div class="clearfix b_form">
+							<input type="text" name="" class="inp w293" placeholder="输入新闻ID">
+							<input type="button" class="l_btn l_red" id="getnew" value="添加">
+						</div>
+						<textarea name="getnew" id="b_list01" style="display: none;"></textarea>
+						<ul class="b_list01">
+						<volist name="list.rel_news" id="item">
+							<input style="display:none" value="{$item.id}">
+							<li class="cur clearfix"><em>{$item.title}</em>
+							<a href="javascript:void(0)" class="edit"></a><i></i><a href="{$item.url}" target="_blank" class="link"></a><i></i><a href="javascript:void(0)" class="del"></a></li>
+						</volist>
+						</ul>
+
+					</div>
+				</div>
+				<div class="b_card clearfix">
+					<span>相关楼盘：</span>
+					<div class="inpBox07">
+						<div class="clearfix b_form">
+							<input type="text" class="inp w245" placeholder="输入楼盘ID  （CITYEN+HID组成）">
+							<input type="button" class="l_btn l_red" id="gethouse" value="添加">
+						</div>
+						<textarea name="gethouse" id="b_list02" style="display: none;"></textarea>
+						<ul class="b_list02 clearfix">
+						<volist name="list.rel_house" id="item">
+						<li hid="{$item.hid}" site="{$item.site}">{$item.name}<a href="{$item.url}" target="_blank" class="link-o"></a><i></i><a href="javascript:void(0)" class="del-o"></a>
+							</li>
+						</volist>
+						</ul>
+					</div>
+				</div>
+			</fieldset>
+			<hr>
+			<fieldset>
+				<legend>SEO优化</legend>
+				<div class="b_card">
+					<span>title： </span>
+					<div class="inpBox">
+						<input type="text" class="inp" name="seo_title" value="{$list.seo_title}" needed="true" tooltip="[必填]">
+						<input type="button" class="seo_copy" id="seo_title" value="复制标题内容">
+					</div>
+				</div>
+				<div class="b_card clearfix" >
+					<span>keywords：</span>
+					<div class="inpBox label">
+						<div class="clearfix b_form">
+					    <input type="text" placeholder="输入标签" class="inp" name="seo_keywords" needed="true" tooltip="[必填]" value="{$list.seo_keywords}">
+						<input type="button" class="seo_copy" id="seo_keywords" value="复制标签内容">
+						</div>
+						
+					</div>
+				</div>
+				<div class="b_card clearfix">
+					<span>description：</span>
+					<div class="inpBox07">
+						<textarea name="seo_description" rows="5" cols="130" style="width:808px;height:77px;font-size:12px;" needed="true" tooltip="[必填]">{$list.seo_description}</textarea>
+						<input type="button" class="seo_copy" id="seo_description" value="复制摘要内容">
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="b_btnBox clearfix">
+			<input name="action_type" value="save" type="hidden">
+			<a href="javascript:void(0)" class="l_btn l_grn saveBtn">保存</a>
+			<a href="javascript:void(0)" class="l_btn l_grn pubBtn">发布</a>
+		</div>
+	</div>
+	</form>
+</div>
+
+<script type="text/javascript" src="http://cdn.leju.com/jQuery1.8.2;encyclopedia/js/base;encyclopedia/js/Pages/knowledge_editor.js?r"></script>

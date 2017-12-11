@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <script type="text/javascript" src="http://cdn.leju.com/cms2.0/js/Controls/ueditor/dialogs/internal.js"></script>
+    <link rel="stylesheet" href="http://cdn.leju.com/cms2.0/js/Controls/ueditor/dialogs/image/image.css" type="text/css" />
+</head>
+<body>
+    <div class="wrapper">
+        <div id="imageTab">
+            <div id="tabHeads" class="tabhead">
+                <span tabSrc="remote"  class="focus"><var id="lang_tab_remote"></var></span>
+                <span tabSrc="local"><var id="lang_tab_local"></var></span>
+            </div>
+            <div id="tabBodys" class="tabbody">
+                <div id="remote" class="panel">
+                    <table cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td class="label"><label for="url"><var id="lang_input_url"></var></label></td>
+                            <td><input id="url" type="text"/></td>
+                        </tr>
+                        <tr>
+                            <td class="label"><label for="width"><var id="lang_input_width"></var></label></td>
+                            <td><input type="text" id="width"/> px</td>
+                        </tr>
+                        <tr>
+                            <td class="label"><label for="height"><var id="lang_input_height"></var></label></td>
+                            <td><input type="text" id="height"/> px</td>
+                        </tr>
+                        <tr>
+                            <td class="label"><label for="border"><var id="lang_input_border"></var></label></td>
+                            <td><input type="text" id="border"/> px</td>
+                        </tr>
+                        <tr>
+                            <td class="label"><label for="vhSpace"><var id="lang_input_vhspace"></var></label></td>
+                            <td><input type="text" id="vhSpace"/> px</td>
+                        </tr>
+                        <tr>
+                            <td class="label"><label for="title"><var id="lang_input_title"></var></label></td>
+                            <td><input type="text" id="title"/></td>
+                        </tr>
+                        <tr>
+                            <td class="label"><var id="lang_input_remoteAlign"></var></td>
+                            <td id="remoteFloat"></td>
+                        </tr>
+                    </table>
+                    <div id="preview"></div>
+                    <div class="lock"><input id="lock" type="checkbox" checked="checked"></div>
+                </div>
+                <div id="local" class="panel">
+                    <div class="wrap f12">
+                        <div class="clearfix bg_t pl10">
+                            <label style="color: red; " class="fl mt5">只允许上传.jpg .png .gif图片格式。</label>
+                            <select id="scaleto" class="fr mt5 mr10">
+                                <option value="">缩放大小</option>
+                                <option value="_s700X0">宽700</option>
+                                <option value="_s600X0">宽600</option>
+                                <option value="_s500X0">宽500</option>
+                                <option value="_s300X0">宽300</option>
+                            </select>                            
+                            <select id="watermark" class="fr mt5 mr10">
+                                <option value="">水印位置</option>
+                                <option value="_wm200">右下</option>
+                                <option value="_wm201">中下</option>
+                                <option value="_wm202">左下</option>
+                            </select>                                           
+                        </div>
+                        <div class="pic_content">
+                            <ul class="clearfix" id="filelist">
+                                <li id="dataPostButContainer"><div class="inner_w" id="spanButtonPlaceholder"><div id="noflash" style="width:86px;height:58px;overflow:hidden;padding:20px 6px;background:#eee;text-align:left;display:none">请确保安装并启用: <strong style="color:red">Flash Player</strong><br/><br/><a href="http://get.adobe.com/cn/flashplayer/" target="_blank">下载Flash Player</a></div></div></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div><div id="upload" style="display: none" ></div><div id="duiqi"></div><div id="localFloat"></div></div>
+                </div>
+                <iframe id="maskIframe" src="about:blank" scrolling="no" frameborder="no"></iframe>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="http://cdn.leju.com/cms2.0/js/Controls/ueditor/dialogs/tangram.js"></script>
+    <script type="text/javascript" src="http://cdn.leju.com/cms2.0/js/Controls/ueditor/third-party/swfupload/swfupload.js"></script>
+    <script type="text/javascript" src="http://cdn.leju.com/cms2.0/js/Controls/ueditor/third-party/jsonparse/json2.js"></script>
+    <script type="text/javascript" src="http://cdn.leju.com/encyclopedia/js/Controls/ueditor/dialogs/image/image.js"></script>
+</body>
+</html>

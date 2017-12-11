@@ -1,0 +1,45 @@
+<div class="wd_list clearfix">
+	<div class="wd_con wd_bgc_f7f7f7">
+		<div class="wd_con_header">
+			<h2 class="ty_tit">
+				<i></i>
+				<span>猜你想知道</span>
+			</h2>
+			<div class="wd_ch_a">
+				<a href="javascript:;" class="wd_change addtag">
+					<i class="wd_chg_icon"></i>换一换
+				</a>
+			</div>
+		</div>
+
+		<div class="wd_slid_wrap2">
+		<?php
+		if ( $hot_tags['status'] ) {
+			if ( !isset($_from_source_flag) ) {
+				$_from_source_flag = 'pc_qa_cnxzd';
+			}
+			foreach ( $hot_tags['list'] as $i => $item ) {
+		?>
+			<div class="wd_slid">
+				<h3 data-tag="{$item.id}" data-hits="{$item.hits}">{$item.title}</h3>
+				<?php foreach ( $item['list'] as $_i => $info ) { ?>
+					<div>
+						<a href="<?php echo url('show', array($info['id']), 'pc', 'ask'); ?>#wt_source={$_from_source_flag}" data-hits="{$info['i_hits']}">{$info.title}</a>
+						<?php if ( $info['tagsinfo'] ) { ?>
+						<div class="wd_label">
+							<i class="wd_label_icon"></i>
+							<?php foreach ( $info['tagsinfo'] as $_t => $tag ) { ?>
+							<span><a href="{$tag.url}">{$tag.name}</a></span>
+							<?php } ?>
+						</div>
+						<?php } ?>
+					</div>
+				<?php } ?></p>
+			</div>
+		<?php
+			} // end foreach  
+		} // end if
+		?>
+		</div>
+	</div>
+</div>

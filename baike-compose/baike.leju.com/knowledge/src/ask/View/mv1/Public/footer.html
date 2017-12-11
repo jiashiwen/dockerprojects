@@ -1,0 +1,78 @@
+<div class="float-wrap sugdiv1 hide">
+	<div class="header">
+		<div class="h-t-warp hide">
+			<i class="i-h-back"></i>
+			<i class="i-h-title"></i>
+			<i class="i-h-t-search"></i>
+		</div>
+		<div class="h-s-warp">
+			<div class="h-s-i-warp">
+				<i class="i-h-i-search"></i>
+				<input type="text" class="h-s-input suginp1" placeholder="房产知识、专业术语、问题解疑一站解决">
+				<a href="javascript:;" class="h-s-clear"><i class="i-h-clear"></i></a>
+			</div>
+			<a href="javascript:;" class="h-s-cancle">取消</a>
+		</div>
+	</div>
+	<div class="section s-history">
+		<div class="s-header">
+			<p>最近搜索</p>
+			<a href="javascript:;" class="s-h-btn c-red">清除</a>
+		</div>
+		<div class="s-content">
+			<ul class="s-c-l-list"></ul>
+		</div>
+	</div>
+	<div class="section s-hot">
+		<div class="s-header">
+			<p>热门知识</p>
+			<a href="javascript:;" class="s-h-btn">换一批</a>
+		</div>
+		<div class="s-content">
+		<?php
+		// echo '<!--', PHP_EOL, print_r($hot_kb, true), PHP_EOL, '-->', PHP_EOL;
+		foreach ( $hot_kb as $i => $blocks ) {
+			$display = $i > 0 ? ' hotkb hide' : ' hotkb';
+		?>
+			<ul class="s-c-article{$display}">
+			<?php foreach ( $blocks as $j => $line ) { ?>
+				<li>
+					<a href="{$line.url}">
+						<p>{$line.title}</p>
+					</a>
+				</li>
+			<?php } // end foreach $blocks ?>
+			</ul>
+		<?php 
+		} // end foreach $hot_kb
+		?>
+			<ul class="s-c-article">
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="float-wrap sugdiv2 hide">
+	<div class="header">
+		<div class="h-t-warp hide">
+			<i class="i-h-back"></i>
+			<i class="i-h-title"></i>
+			<i class="i-h-t-search"></i>
+		</div>
+		<div class="h-s-warp">
+			<form id="search_form" action="/search.html" method="get">
+			<div class="h-s-i-warp">
+				<i class="i-h-i-search"></i>
+				<input type="text" class="h-s-input suginp2" name="k" placeholder="房产知识、专业术语、问题解疑一站解决">
+				<a href="javascript:;" class="h-s-clear"><i class="i-h-clear"></i></a>
+			</div>
+			<a href="javascript:;" class="h-s-cancle">取消</a>
+			</form>
+		</div>
+	</div>
+	<div class="section s-search">
+		<div class="s-content">
+			<ul class="s-c-article suglist"></ul>
+		</div>
+	</div>
+	<a href="javascript:;" class="ask">提问</a>
+</div>

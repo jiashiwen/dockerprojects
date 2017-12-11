@@ -1,0 +1,142 @@
+<div class="ty_content">
+	<h3 class="d-title clearfix">
+		<span>词条管理</span>
+	</h3>
+	<form id="searchForm" action="/Wiki/" method="get">
+	<div class="ty_Ctop clearfix">
+		<ul class="clearfix">
+			<li><span>词条</span><?php
+				$cfg = array('class'=>'w166', 'name'=>'title', 'id'=>'',);
+				echo search_form_input($form['title'], $cfg); ?></li>
+			<li>
+				<span>来源</span>
+				<?php
+				$cfg = array('class'=>'w110', 'name'=>'src_type', 'id'=>'',);
+				echo search_form_select($form['src_type'], $dicts['SOURCE'], $cfg);
+				?>
+			</li>
+			<li>
+				<span>类别</span>
+				<?php
+				$cfg = array('class'=>'w102', 'name'=>'cateid', 'id'=>'',);
+				echo search_form_select($form['cateid'], $dicts['CATE'], $cfg);
+				?>
+			</li>
+			<li><span>作者</span><?php
+				$cfg = array('class'=>'w110', 'name'=>'editor', 'id'=>'',);
+				echo search_form_input($form['editor'], $cfg); ?></li>
+			<li><span>发布时间</span><?php
+				$cfg = array('class'=>'w210', 'name'=>'ptime', 'id'=>'searchdate');
+				$ptime = isset($form['ptime']) ? date('Y-m-d', $form['ptime']) : '';
+				echo search_form_timepicker($ptime, $cfg); ?></li>
+			<li class="ty_lanmu"><span>热度排行</span><?php
+				$cfg = array('class'=>'', 'name'=>'sort', 'id'=>'',);
+				echo search_form_select($form['sort'], $dicts['SORT'], $cfg);
+				?></li>
+			<li><span>发布状态</span><?php
+				$cfg = array('class'=>'w102', 'name'=>'status', 'id'=>'',);
+				echo search_form_select($form['status'], $dicts['STATUS'], $cfg);
+				?></li>
+			<li class="fr"><a href="javascript:;" class="l_btn l_red">查询</a></li>
+		</ul>
+	</div>
+	<div class="ty_list">
+		<notempty name="list">
+		<a class="ty_new" href="/Wiki/Add"><i class="ty_add"></i>新建</a>
+		<table class="d-table">
+			<thead>
+				<th>词条</th>
+				<th>热度</th>
+				<th>作者</th>
+				<th>类别</th>
+				<th>更新时间</th>
+				<th>来源</th>
+				<th>状态</th>
+				<th>操作</th>
+			</thead>
+			<tbody>
+				<foreach name="list" item="vo" key="k" >
+				<tr>
+					<td><span>{$vo.title}<if condition="$vo[recommend][0] OR $vo[recommend][1] OR $vo[recommend][2]"><em>荐</em></if><if condition="($vo.p - $nowtime) GT 0"><em class="time"><i class="ty_time"></i></em></if></span></td>
+					<td><span>{$vo.hits}</span></td>
+					<td><span>{$vo.editor}</span></td>
+					<td><span><?php echo $dicts['CATE'][$vo['cateid']]['name']; ?></span></td>
+					<td><span><?php
+						$time_flag = '';
+						$time = '';
+						switch ( intval($vo['status']) ) {
+							case 2:
+								$time_flag = '<b class="l_grn1">[定时]</b>';
+								$time = date('Y-m-d H:i:s', $vo['ptime']);
+								break;
+							case 0:
+								$time_flag = '<b class="l_gray">[未发布]</b>';
+								$time = '';
+								break;
+							case 1:
+								$time_flag = '<b class="l_org">[草稿]</b>';
+								$time = date('Y-m-d H:i:s', $vo['utime']);
+								break;
+							case 9:
+								$time_flag = '<b class="l_grn2">[已发布]</b>';
+								$time = date('Y-m-d H:i:s', $vo['utime']);
+								break;
+							case -1:
+								$time_flag = '<b class="l_red">[删除]</b>';
+								$time = date('Y-m-d H:i:s', $vo['utime']);
+								break;
+						}
+						// echo $time_flag, ' ', $time;
+						echo $time;
+					?></span>
+					</td>
+					<td><span><?php
+						$_src_name = $dicts['SOURCE'][$vo['src_type']]['name'];
+						if ( trim($vo['extra']['src_url'])!='' || $vo['src_type']==1 ) {
+							$_src_url = trim($vo['extra']['src_url']);
+						} else {
+							$_src_url = '';
+						}
+						if ( $_src_url == '' ) {
+							echo $_src_name;
+						} else {
+							echo '<a class="link" target="_blank" href="'.$_src_url.'">'.$_src_name.'<i class="ty_link"></i></a>';
+						}
+					?></span></td>
+					<td><span><?php echo $time_flag; ?></span></td>
+					<td>
+						<p class="last">
+						<eq name="vo.status" value="9">
+							<a class="a1" href="{$vo.viewurl.pc}?nofit=1" target="_blank">PC链接</a>
+							<a class="a1" href="{$vo.viewurl.touch}?nofit=1" target="_blank">Touch链接</a>
+						<else/>
+							<a class="a1" href="{$vo.preview.pc}" target="_blank">PC预览</a>
+							<a class="a1" href="{$vo.preview.touch}" target="_blank">Touch预览</a>
+						</eq>
+						<br>
+						<a class="a1" href="/Wiki/edit?id={$vo.id}">修改</a>
+						<?php if ( intval($vo['status'])!=-1 ) { ?>
+						<a class="a2 del" did="{$vo.id}" data-type="" href="javascript:;">删除</a>
+						<?php } ?>
+						</p>
+					</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<notempty name="pager">
+			<include file="Public:pager" />
+		</notempty>
+		</notempty>
+		<empty name="list">
+		<!-- 无结果 -->
+		<div class="ty_Nores">
+			您选择“条件搜索”后，<span>暂无数据</span>！
+		</div>
+		<!-- 无结果end -->
+		</empty>
+	</div>
+	</form>
+	<script type="text/javascript" src="http://cdn.leju.com/jQuery1.8.2;encyclopedia/js/base;encyclopedia/js/Pages/entry_manage.js?r"></script>
+</div>
+

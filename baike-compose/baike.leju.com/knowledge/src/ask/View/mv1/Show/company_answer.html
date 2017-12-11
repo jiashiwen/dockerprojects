@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="applicable-device" content="mobile">
+	<title>{$pageinfo.seo_title}</title>
+	<meta name="keywords" content="{$pageinfo.keywords}"/>
+	<meta name="description" content="{$pageinfo.description}" />
+	<script type="text/javascript" src="//res.leju.com/resources/app/touch/ask/js/index.js"></script>
+	<link rel="stylesheet" href="//res.leju.com/resources/app/touch/ask/styles/styles.css">
+	<script src="//cdn.leju.com/sso/sso.js"></script>
+	<style type="text/css">
+            .none {display: none!important; }
+            .lMask {position: fixed; width: 100%; height: 100%;left: 0;top: 0;bottom: 0; right: 0; z-index: 100; background-color: #1a1d22;}
+            .lMask .lMask_img {width: 100%;height: 88%;position: relative;overflow: auto;}
+            .lMask .lMask_imgM {width: 100%;position: absolute; top: 0;bottom: 0;margin: auto;left: 0;right: 0;}
+            .lMask .lMask_text {position: absolute;left: 0;bottom: 5%; width: 100%;font-size: 14px; color: #fff; padding: 0 1em;box-sizing: border-box;z-index: 99;}
+	</style>
+</head>
+<body>
+	<div class="wtqsdetail">
+		<div class="dll_header">
+			<a href="//m.news.leju.com/#ln=touch_ask_cjdh"><h2 class="dll_caijinglogo fl"></h2></a>
+			<div class="y_txt">乐道问答</div>
+			<div class="dll_functionbar clearfix">
+				<a href="<?php echo url('LDSearch', [''], 'touch', 'ask'); ?>#ln=touch_qiye_search"><i class="dll_icon18"></i></a>
+				<?php if ( !$islogined ) { ?>
+				<a href="//my.leju.com" data-status="0"><i class="y_log">登录</i></a>
+				<?php } else { ?>
+				<a href="javascript:;" data-status="1"><i class="y_log">退出</i></a>
+				<?php } ?>
+			</div>
+		</div>
+		  <div class="wtqsdetail_top bgcolor">
+			<div class="wtdetailtop_wanda">
+				<a href="{$company.url}#ln=touch_qiye_dh" class="wtwda" title="{$company.title}">{$company.stname}</a>
+				<div class="wtqsfx">
+				<?php
+				$shareinfo = json_encode([
+					'url' => url('lda', ['id'=>$answer['id']], 'touch', 'ask'),
+					'img' => $default['cjlogo'],
+					'title' => trim($question['title']).'-乐居财经',
+					'desc' => '分享你的地产看法。',
+				]);
+				?>
+					<a href="javascript:;" class="js_share" data-lejushare='{$shareinfo}'></a>
+					<a href="javascript:;" class="wtqsfx_qq js_share" data-lejushare='{$shareinfo}'></a>
+					<a href="javascript:;" class="wtqsfx_kj js_share" data-lejushare='{$shareinfo}'></a>
+				</div>
+			</div>
+			<h2>{$question.title}</h2>
+			<div class="wtaskdatl_replay">
+				<div class="wtreplay_sp"><a id="answerBtn" data-url="/show/ldr?id={$question.id}#ln=touch_qiye_ahuida" href="javascript:;"><i></i><span>回答</span></a></div>
+				<div class="wtreplay_ck">
+					<a href="{$question.url}#ln=touch_qiye_aall">查看<span>{$question.i_replies}</span>个回答 </a>
+					<i></i>
+				</div>
+			</div>
+		</div>
+		<div class="wtaskdatl_cont bgcolor">
+			<div class="wtaskdatl_conttop">
+				<div class="wtaskdatl_people_lf" data-uid="{$answer.userid}">
+					<img src="{$default.avatar}" alt="{$answer.extra.usernick}" />
+					<div class="wtpeoplert">
+						<span class="wtpeople_name">{$answer.extra.usernick}</span>
+						<span class="wtpeople_sj">{$answer.ctime|date="Y年m月d日",###}发起了回答</span>
+					</div>
+				</div>
+				<div class="y_toolBox">
+				<?php if ( $answer['is_fuser']==1 ) { ?>
+					<a  href="javascript:void(0);" class="ic03 followBnt" id="follow_user_{$answer.id}" data-direct="0" data-id="{$answer.userid}" data-url="/ldapi/uUser">已关注</a>
+				<?php } else { ?>
+					<a  href="javascript:void(0);" class="ic02 followBnt" id="follow_user_{$answer.id}" data-direct="1" data-id="{$answer.userid}" data-url="/ldapi/uUser">关注</a>
+				<?php } ?>
+				</div>
+			</div>
+			<p>{$answer.reply}</p>
+		</div>
+		<?php
+		$answer['images'] = isset($answer['extra']['images']) ? $answer['extra']['images'] : [];
+		// echo '<!--', PHP_EOL, print_r($answer, true), PHP_EOL, '-->', PHP_EOL;
+		if ( !empty($answer['images']) ) {
+		?>
+		<div class="wtwd_imglb wtqscontimg">
+		<?php foreach ( $answer['images'] as $_i => $image ) { ?>
+			<a href="javascript:;" data-fullimg="{$image}"><img class="js_img" src="{$image}" alt="图 <?php echo $_i+1; ?>" /></a>
+		<?php } ?>
+		</div>
+		<?php } ?>
+
+		<div class="wtaskdatl_newpj bgcolor" >
+			<div class="wtaskdatl_newpj_top">
+				<h1>最新评论</h1>
+				<div class="wtasknewpj_ck">
+					<a href="http://c.leju.com/comment/comment/mobile?key=c60ac31f20c7172ed6e73cb07efa4af9&unique_id={$answer.id}#ln=touch_qiye_asypl" data-answerid="{$answer.id}">查看全部评论 </a>
+					<i></i>
+				</div>
+			</div>
+			<ul class="dd-talkbox" id="comment">
+				
+			</ul>
+		</div>
+
+		<div class="wtqsdetail_nonehd" style="display: none;">
+			<i></i>
+			<span>该回答暂无评论，添加评论，分享你的地产看法。</span>
+		</div>
+	</div>
+	<ul class="wtaskdatl_foot bgcolor">
+		<?php if ( $answer['is_good'] ) { ?><li class="on likeBtn" data-likeid="{$answer.id}" data-direct="0">
+			<i class="ic01"></i>
+			<span>已赞同({$answer.i_good})</span>
+		</li><?php } else { ?><li class="likeBtn" data-likeid="{$answer.id}" data-direct="1">
+			<i class="ic01"></i>
+			<span>赞同({$answer.i_good})</span>
+		</li><?php } ?>
+		<?php if ( $answer['is_focus'] ) { ?><li class="on">
+			<a class="followBnt" id="follow_answer" href="javascript:;" data-direct="0" data-id="{$answer.id}" data-url="/ldapi/uAnswer">
+				<i class="ic02"></i>
+				<span>取消收藏</span>
+			</a>
+		</li><?php } else { ?><li>
+			<a class="followBnt" id="follow_answer" href="javascript:;" data-direct="1" data-id="{$answer.id}" data-url="/ldapi/uAnswer">
+				<i class="ic02"></i>
+				<span>加入收藏</span>
+			</a>
+		</li><?php } ?>
+		<li>
+			<a href="http://c.leju.com/comment/comment/mobile?key=c60ac31f20c7172ed6e73cb07efa4af9&unique_id={$answer.id}#ln=touch_qiye_apinglun">
+				<i class="ic03"></i>
+				<span>添加评论</span>
+			</a>
+		</li>
+		<li>
+			<i class="ic04"></i>
+			<?php $link_append = $next['id']==0 ? '' : '#ln=touch_qiye_anext'; ?>
+			<a href="javascript:void(0);" data-url="{$next.url}{$link_append}" class="nextAnswer"><span data-next="{$next.id}">下个回答</span></a>
+		</li>
+	</ul>
+	<div class="y_mask cancelFollowTip" style="display: none;">
+		<div class="y_pop">
+			<h2>确定取消关注吗？</h2>
+			<div class="y_btn sureCancelFollow">取消关注</div>
+			<div class="y_off">
+				<a class="closeTip"></a>
+			</div>
+		</div>
+	</div>
+	<div class="lMask none" id="img_scale">
+		<h3 class="g_lbtitle">图片预览<a href="javascript:void(0);" class="g_prev"></a></h3>
+		
+        <div class="lMask_img" id="img_scale_box"><img class="lMask_imgM" id="img_scale_img" src="" style="width: 375px;"></div>
+        <p class="lMask_text">
+            <span></span>
+        </p>
+    </div>
+	<script type="text/template" id="tempComment">
+		<literal>
+		{{~it:item}}
+			<li>
+				<figure><img src="{{=item.avatar}}"></figure>
+				<div class="dd-word-main">
+					<h3>{{=item.author}}</h3>
+					<h4>{{=item.content}}</h4>
+					<h5 class="clearfix">
+						<em>{{=item.createtime}}</em>
+						<p>
+							{{?item.isPriase == 1}}
+								<a href="javascript:void(0);" data-cid="{{=item.id}}" class="js_comment_like"><i class="dd-icon-nice iconon"></i><label class="js_praise_num">{{=item.praise}}</label></a>
+							{{??}}
+								<a href="javascript:void(0);" data-cid="{{=item.id}}"  class="js_comment_like"><i class="dd-icon-nice"></i><label class="js_praise_num">{{=item.praise}}</label></a>
+							{{?}}
+						</p>
+					</h5>
+				</div>
+				
+			</li>
+		{{~}}
+		</literal>
+	</script>
+	<script>
+	var pageConfig = {
+		unique_id: '{$comments.unique_id}', // 必填
+		key: '{$comments.appkey}', //必填
+		title: '回答详情', //必填 不用了
+	};
+	</script>
+	<script type="text/javascript">
+		var city = '{$statscode.city}';
+		var level1_page = '{$statscode.level1_page}';
+		var level2_page = '{$statscode.level2_page}';
+		var custom_id = '{$statscode.custom_id}';
+		var news_source='{$statscode.news_source}';
+	</script>
+	<script type="text/javascript" src="//cdn.leju.com/lejuTj/gather.source.js"></script>
+	<script src="//res.leju.com/scripts/libs/zepto/v1/zepto.js"></script>
+	<script src="//res.leju.com/scripts/app/ask/v1/show_answer.js"></script>
+	<script src="//res.leju.com/scripts/app/ask/v1/login.js"></script>
+</body>
+</html>

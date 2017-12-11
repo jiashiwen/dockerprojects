@@ -1,0 +1,215 @@
+<h3 class="d-title clearfix">
+	<span>词条统计</span>
+</h3>
+<ul class="d-imglist clearfix">
+	<li>
+		<div class="d-odd">
+			<h3><span>七天更新趋势</span></h3>
+			<div class="d-word " >
+				<div id="echarts1" style="margin-top:-50px;height:200px;width:90%">
+
+				</div>
+			</div>
+		</div>
+	</li>
+	<li>
+		<div class="d-even">
+			<h3><span>七天热度趋势</span></h3>
+			<div class="d-word"  >
+				<div id="echarts2" style="margin-top:-50px;height:200px;width:90%">
+
+				</div>
+			</div>
+		</div>
+	</li>
+	<li>
+		<div class="d-odd">
+			<h3><span>七天热词排行</span></h3>
+			<div class="d-word clearfix">
+				<div class="d-wordlist">
+					<ul class="d-odd">
+						<volist name="words" id="v" mod="2" key='k'>
+							<eq name="mod" value="0">
+								<a href="<?php echo url('show', array($v['id']), 'touch', 'wiki')?>" target="_blank">
+									<li class="clearfix">
+										<eq name="k" value="1">
+											<p><em class="d-red">{$k}.</em>{$v.name}</p>
+											<span class="d-red">{$v.count}</span>
+										<else/>
+											<p><em>{$k}.</em>{$v.name}</p>
+											<span>{$v.count}</span>
+										</eq>
+									</li>
+								</a>
+							</eq>
+						</volist>
+					</ul>
+				</div>
+				<div class="d-wordlist">
+					<ul class="d-even clearfix">
+						<volist name="words" id="v" mod="2" key='k'>
+							<eq name="mod" value="1">
+								<a href="<?php echo url('show', array($v['id']), 'touch', 'wiki')?>" target="_blank">
+									<li class="clearfix">
+										<p><em>{$k}.</em>{$v.name}</p>
+										<span>{$v.count}</span>
+									</li>
+								</a>
+							</eq>
+						</volist>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</li>
+</ul>
+<h3 class="d-title clearfix">
+	<span>知识统计</span>
+</h3>
+<ul class="d-imglist clearfix">
+	<li>
+		<div class="d-odd">
+			<h3><span>七天更新趋势</span></h3>
+			<div class="d-word">
+			<div id="echarts4" style="margin-top:-50px;height:200px;width:90%">
+
+			</div>
+
+			</div>
+		</div>
+	</li>
+	<li>
+		<div class="d-even">
+			<h3><span>七天热度趋势</span></h3>
+			<div class="d-word">
+			<div id="echarts5" style="margin-top:-50px;height:200px;width:90%">
+
+			</div>
+			</div>
+		</div>
+	</li>
+	<!--
+	<li>
+		<div class="d-odd">
+			<h3><span>七天热度排行</span></h3>
+			<div class="d-word">
+			<div id="echarts6" style="margin-top:-50px;height:200px;width:90%">
+
+			</div>
+			</div>
+		</div>
+	</li>
+	-->
+	<li>
+		<div class="d-even">
+			<h3><span>七天知识排行</span></h3>
+			<div class="d-word clearfix">
+				<div class="d-wordlist">
+				<noempty name="rank">
+					<ul class="d-odd">
+					<volist name="rank.0" id="r" key="key">
+					<a href="<?php echo url('show', array($r['id']), 'touch', 'baike'); ?>" target="_blank">
+						<li class="clearfix">
+							<p><em class="<eq name='key' value='1'>d-red</eq>">{$key}.</em>{$r.title}</p>
+							<span <eq name='key' value='1'>class="d-red"</eq>>{$r.total}</span>
+						</li>
+					</a>
+					</volist>
+					</ul>
+				</div>
+				</noempty>
+				<div class="d-wordlist">
+				<noempty name="rank.1">
+					<ul class="d-even clearfix">
+					<volist name="rank.1" id="r" key="key">
+					<a href="<?php echo url('show', array($r['id']), 'touch', 'baike'); ?>" target="_blank">
+						<li class="clearfix">
+							<p><em>{$key+4}.</em>{$r.title}</p>
+							<span>{$r.total}</span>
+						</li>
+					</a>
+					</volist>
+					</ul>
+					</noempty>
+				</div>
+			</div>
+		</div>
+	</li>
+</ul>
+<!--
+<h3 class="d-title clearfix">
+	<span>问答统计</span>
+</h3>
+<ul class="d-imglist clearfix">
+	<li>
+		<div class="d-odd">
+			<h3><span>更新趋势</span></h3>
+			<div class="d-word">
+			</div>
+		</div>
+	</li>
+	<li>
+		<div class="d-even">
+			<h3><span>热度趋势</span></h3>
+			<div class="d-word">
+			</div>
+		</div>
+	</li>
+	<li>
+		<div class="d-odd">
+			<h3><span>热度排行</span></h3>
+			<div class="d-word">
+			</div>
+		</div>
+	</li>
+	<li>
+		<div class="d-even">
+			<h3><span>七天热词排行</span></h3>
+			<div class="d-word clearfix">
+				<div class="d-wordlist">
+					<ul class="d-odd">
+						<li class="clearfix">
+							<p><em class="d-red">1.</em>冯仑风马牛</p>
+							<span class="d-red">1596825</span>
+						</li>
+						<li class="clearfix">
+							<p><em>2.</em>冯仑风马牛</p>
+							<span>1596825</span>
+						</li>
+						<li class="clearfix">
+							<p><em>2.</em>冯仑风马牛</p>
+							<span>1596825</span>
+						</li>
+						<li class="clearfix">
+							<p><em>2.</em>冯仑风马牛</p>
+							<span>1596825</span>
+						</li>
+					</ul>
+				</div>
+				<div class="d-wordlist">
+					<ul class="d-even clearfix">
+						<li class="clearfix">
+							<p><em>2.</em>冯仑风马牛</p>
+							<span>1596825</span>
+						</li>
+						<li class="clearfix">
+							<p><em>2.</em>冯仑风马牛</p>
+							<span>1596825</span>
+						</li>
+						<li class="clearfix">
+							<p><em>2.</em>冯仑风马牛</p>
+							<span>1596825</span>
+						</li>
+						<li class="clearfix">
+							<p><em>2.</em>冯仑风马牛</p>
+							<span>1596825</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</li>
+</ul>
+-->
+<script src="http://cdn.leju.com/queue/js/echarts.common.min.js"></script>
+<script type="text/javascript" src="http://cdn.leju.com/jQuery1.8.2;encyclopedia/js/base;encyclopedia/js/Pages/home.js?r"></script>

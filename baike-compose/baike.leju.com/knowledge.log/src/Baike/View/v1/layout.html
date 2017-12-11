@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<title>{$pageinfo.title}</title>
+	<meta name="title" content="{$pageinfo.seo_title}"/>
+	<meta name="keywords" content="{$pageinfo.keywords}"/>
+	<meta name="description" content="{$pageinfo.description}" />
+	<link rel="stylesheet" href="//cdn.leju.com/encypc/styles/styles.css">
+	<script type="text/javascript" src="http://cdn.leju.com/encypc/js/fullPage/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+	<include file="Public:header" />
+	{__CONTENT__}
+	<include file="Public:footer" />
+
+	<script type="text/javascript" src="http://cdn.leju.com/encypc/js/encypc.js?r"></script>
+	<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+	</script>
+</body>
+</html>

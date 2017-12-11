@@ -1,0 +1,78 @@
+<include file="Public:search" />
+<link rel="stylesheet" type="text/css" href="//cdn.leju.com/encypc/js/webuploader/webuploader.css">
+<script type="text/javascript">
+	document.domain='leju.com';
+</script>
+<div class="sWrap">
+	<div class="clearfix mt48">
+		<div class="sLbox">
+		<form name="frmQ" method="post" action="/ask/save#wt_source=pc_qa_tw">
+			<div class="sAQ_tit">问题描述</div>
+			<div class="sAsk_titbox">
+				<input type="text" placeholder="标题：写下您的问题" name="title" id="qa_text">
+				<span class="count">1/30</span>
+			</div>
+			<div class="sAsk_con">
+				<textarea class="wd_textarea none" id="qa_bc" placeholder="选填：详细说明你的问题,以便获得更好的答案" name="desc"></textarea>
+				<div class="count">1/200</div>
+				<div class="imgBox">
+					<a href="javascript:;" class="addimg"><i></i>添加图片</a>
+					<span class="tip"><i></i>添加图片配合描述问题</span>
+				</div>
+				<div class="imgBox">
+					<div class="img" id="qa_img"></div>
+				</div>
+			</div>
+			<div class="sAQ_tit">选择标签<span><i></i>正确的问题标签，会获得更准确专业的回答</span></div>
+			<div class="sTag_box">
+				<input type="hidden" name="tags" />
+				<div class="tags_content_new">
+					<input type="hidden" value="" name="tags_id" data-tags="tags_id">
+					<input type="hidden" value="" name="tags_name" data-tags="tags_name">
+				</div>
+				<script>
+				(function(){
+					window.tags_config = {
+						wrapClass: 'tags_content_new',      //容器class
+						insertCss: true, //是否插入外链样式文件
+						suggestInput: true, //是否有联想搜索
+						deleteAbled: true, //是否允许删除
+						placeHolder: false, //删除后是否占位
+						key: '5ed33f7008771c9d49e3716aeaeca581' //业务key
+					}
+				})();
+				</script>
+				<script type="text/javascript" src="//cdn.leju.com/tags-fe/prd/tags_init_new.js"></script>
+			</div>
+			<div class="sAQ_tit">答案通知<span><i></i>只用于答案提示，不会接到任何骚扰信息</span></div>
+			<input type="text" class="sAnswer_notice" placeholder="手机/邮箱" name="data_notice">
+			<?php if ( $professor ) { ?>
+			<input type="hidden" name="pro" value="{$professor.id}">
+			<?php } else { ?>
+			<input type="hidden" name="pro" value="0">
+			<?php } ?>
+			<div class="sQuestion_sub">
+				<a class="sBut01" href="javascript:;">提交</a>
+				<a class="sAnonymous sAnonymous_cur" href="javascript:;"><i></i>匿名</a>
+				<input type="hidden" name="anonymous" value="0">
+			</div>
+			</form>
+		</div>
+		<div class="sRbox">
+		<?php if ( $professor ) { ?>
+			<img src="{$professor.ask}" />
+		<?php } ?>
+
+			<div class="sTit1">
+				如何提出一个优质的问题？
+				<span></span>
+			</div>
+			<ul class="sAsk_list02">
+				<li><a href="#"><i></i>问题要具体、语句通顺，不寻求模糊空洞的答案。广告等违反社区规则的提问将被删除并给予处罚</a></li>
+				<li><a href="#"><i></i>句式、标点符号使用严谨，问题尽量不含有与问题本身无关的词语（如：跪求大神，急急急）。</a></li>
+				<li><a href="#"><i></i>打上正确的标签、添加悬赏将有助于更快地获得满意回答</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="//cdn.leju.com/encypc/js/webuploader/webuploader.min.js"></script>

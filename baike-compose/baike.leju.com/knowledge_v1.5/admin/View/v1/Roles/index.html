@@ -1,0 +1,20 @@
+<h3 class="d-title clearfix">
+	<span>角色管理</span>
+	<a href="/Roles/Add" class="l_btn l_red">创建角色</a>
+</h3>
+<table class="d-table d-mt20">
+	<thead>
+		<th>角色</th>
+		<th>数量</th>
+		<th>操作</th>
+	</thead>
+	<tbody>
+		<foreach name="list" item="vo" >
+		<tr>
+			<td><span>{$vo.name}</span></td>
+			<td><span>{$vo.icount}</span></td>
+			<td><a href="/Roles/Edit?id={$vo.id}">权限编辑</a></td>
+		</tr>
+		</foreach>
+	</tbody>
+</table>

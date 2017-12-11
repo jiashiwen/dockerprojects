@@ -1,0 +1,28 @@
+#  search.leju.com local port:8000 9000;8001 9001;8002 9002;8003 9003
+
+version: '2'
+
+services:
+  baike.leju.com-php5-fpm_00:
+      image: registryprod.leju.com:5000/prod/search.leju.com-php:5.6.30-fpm
+      command: /envconfig/initphpfpm.sh
+      cpuset: 6-9
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - ./baike.leju.com:/project
+        - ./runtimephpfpm/runtime_00:/envconfig
+      network_mode: "host"
+      container_name: baike.leju.com-php5-fpm_00
+
+  search.leju.com-nginx:
+      image: registryprod.leju.com:5000/prod/leju.com-nginx
+      command: /envconfig/initnginx.sh
+      cpuset: 4-5
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - ./baike.leju.com:/project
+        - ./runtimenginx/nginx/nginx.conf:/etc/nginx/nginx.conf
+        - ./runtimenginx:/envconfig
+      network_mode: "host"
+      container_name: baike.leju.com-nginx
+  

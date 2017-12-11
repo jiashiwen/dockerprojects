@@ -1,0 +1,91 @@
+<div class="content_wrapper {$jsflag}">
+	<notempty name="D.forces">
+	<div class="l_focus">
+		<ul class="l_focus_ul" style="width: 3000px;">
+			<volist name="D.forces" id="item">
+			<li>
+				<a href="<?php echo url('show', array($item['id']));?>{$kd_index_pic}">
+				<img src="{$item.cover|changeImageSize=###,750,340}" alt="{$item.title}"></a>
+				<p><a href="{$item.url}{$kd_index_pic}">{$item.title}</a></p>
+			</li>
+			</volist>
+		</ul>
+		<div class="l_focus_dot">
+			<volist name="D.forces" id="item" key="key">
+			<a class="<eq name='key' value='1'>l_cur</eq>" href="javascript:;"></a>
+			</volist>
+		</div>
+	</div>
+	</notempty>
+
+	<div class="l_box">
+		<div class="l_navBox">
+			<ul class="l_nav">
+				<foreach name="D.cates.list" key="key" item="item">
+				<li class="<eq name='key' value='0'>l_cur</eq><gt name='key' value='3'>none</gt>">
+					<a href="{$item.href}">
+					<i class="{$item.icon}"></i><b>{$item.title}</b></a>
+				</li>
+				</foreach>
+			</ul>
+		</div>
+		<notempty name="D.latest">
+		<foreach name="D.latest" item="l" key="kk">
+		<div class="l_cardBox <gt name='kk' value='0'>none</gt>">
+			<div class="b_cardBox">
+				<notempty name="l.topKB">
+				<div class="b_card clearfix">
+					<div class="b_left">
+						<a href="{$l.topKB.url}"><h2>{$l.topKB.title}</h2></a>
+						<h3>
+						<volist name="l.topKB.tags" id="t">
+							<a href="<?php echo url('agg', array($t, $city['code']), 'touch', 'baike')?>"><span>{$t}</span></a>
+						</volist>
+						</h3>
+						<!--<h4>乐居互联网  05-12</h4>-->
+					</div>
+					<div class="b_right"><img src="{$l.topKB.cover|changeImageSize=###, 240, 180}" alt="{$l.topKB.title}"></div>
+				</div>
+				</notempty>
+			<volist name="l.list" id="item" key="k">
+				<div class="b_card clearfix">
+					<div class="b_left">
+						<a href="<?php echo url('show', array($item['id']));?>"><h2>{$item.title}</h2></a>
+						<h3>
+						<volist name="item.tags" id="t">
+							<a href="<?php echo url('agg', array($t, $city['code']), 'touch', 'baike')?>"><span>{$t}</span></a>
+						</volist>
+						</h3>
+						<!--<h4>乐居互联网  05-12</h4>-->
+					</div>
+					<div class="b_right"><img src="{$item.cover|changeImageSize=###, 240, 180}" alt="{$item.title}"></div>
+				</div>
+			</volist>
+			</div>
+			<a class="l_cardMore" href="<?php echo url('cate', array('id'=>$l['cateid'], $city['code']));?>{$kd_index_wdmore}">更多{$l.name}</a>
+		</div>
+		</foreach>
+		</notempty>
+	</div>
+
+	<div class="l_box">
+		<h2 class="b_title">热门词条<a href="<?php echo url('index', array(), 'touch', 'wiki');?>{$kd_index_wdmore}">更多</a></h2>
+		<notempty name="D.hotwords">
+		<div class="l_list01">
+			<ul>
+			<foreach name="D.hotwords" item="h" key="key">
+				<if condition="$h.hot gt 0">
+				<li class="l_up"><a href="<?php echo url('show', array(base64_encode($h['id'])), 'touch', 'wiki');?>">{$h.entry}</a></li>
+				<elseif condition="$h.hot lt 0"/>
+				<li class="l_dn"><a href="<?php echo url('show', array(base64_encode($h['id'])), 'touch', 'wiki');?>">{$h.entry}</a></li>
+				<else/>
+				<li><a href="<?php echo url('show', array(base64_encode($h['id'])), 'touch', 'wiki');?>">{$h.entry}</a></li>
+				</if>
+			</foreach>
+			</ul>
+		</div>
+	</notempty>
+	</div>
+
+	<include file="Public:footer" />
+</div>
