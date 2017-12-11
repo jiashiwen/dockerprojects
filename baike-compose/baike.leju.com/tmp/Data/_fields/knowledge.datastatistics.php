@@ -1,1 +1,0 @@
-a:8:{i:0;s:2:"id";i:1;s:4:"city";i:2;s:7:"reltype";i:3;s:5:"ctime";i:4;s:7:"chartid";i:5;s:4:"data";s:3:"_pk";s:2:"id";s:5:"_type";a:6:{s:2:"id";s:16:"int(11) unsigned";s:4:"city";s:11:"varchar(50)";s:7:"reltype";s:22:"enum('kb','qa','wiki')";s:5:"ctime";s:16:"int(10) unsigned";s:7:"chartid";s:11:"varchar(20)";s:4:"data";s:10:"mediumtext";}}

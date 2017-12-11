@@ -1,8 +1,0 @@
-<div class="z_side_list">
-	<h3 class="z_side_hd">猜您喜欢<i></i></h3>
-	<ul>
-	<?php foreach ( $latest_answers as $i => $question ) { ?>
-		<li><a href="<?php echo url('show', array($question['id']), 'pc', 'ask'); ?>#wt_source=qa_list_cnxh">{$question.title}</a></li>
-	<?php } ?>
-	</ul>
-</div>
