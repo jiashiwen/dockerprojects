@@ -1,0 +1,30 @@
+# 前台使用的静态规则
+fastcgi_param			PS_URL				"cdn.leju.com/estatepedia";
+fastcgi_param			PS_ADMIN			"cdn.leju.com/encyclopedia";
+
+# ThinkPHP 库配置
+fastcgi_param			PATH_THINKPHP		"/project/knowledge/src/lib";
+# 定义基本变量
+fastcgi_param			PATH_RUNTIME		"/project/tmp";
+
+# 缓存配置
+fastcgi_param			REDIS_HOST			"10.204.12.29";
+fastcgi_param			REDIS_PORT			"6381";
+fastcgi_param			REDIS_DB			"2";
+fastcgi_param			REDIS_AUTH			"2EDI5R3d1S";
+
+# 数据库配置
+fastcgi_param			DB_HOST				"10.204.12.29";
+fastcgi_param			DB_PORT				"3308";
+fastcgi_param			DB_NAME				"knowledge";
+fastcgi_param			DB_USER				"lejuuser";
+fastcgi_param			DB_PASS				"r%fCwhs@XCW0nlI!";
+
+#java houtai restful服务配置
+fastcgi_param                   JAVA_SEARCH_SERVICE			"127.0.0.1:8100";
+fastcgi_param                   JAVA_SEARCH_USER                        "baike";
+fastcgi_param                   JAVA_SEARCH_PASS                        "4vLE4wwy6Otcoup9Bc";
+## 敏感词处理服务
+fastcgi_param			SENSITIVE_SERVICE			"127.0.0.1:8110";
+fastcgi_param			WIKI_SERVICE				"127.0.0.1:8080";
+

@@ -1,0 +1,14 @@
+# 静态资源文件域名配置
+fastcgi_param		PS_URL			"p.search.leju.com";
+# ThinkPHP 库配置
+fastcgi_param		PATH_THINKPHP	"/search.leju.com/lib";
+# 定义基本变量
+fastcgi_param		PATH_RUNTIME	"/tmp";
+# 缓存配置
+#fastcgi_param		REDIS_HOST		"10.207.0.208";
+fastcgi_param		REDIS_HOST		"10.207.2.10";
+fastcgi_param		REDIS_PORT		"6379";
+fastcgi_param		REDIS_DB		"1";
+#fastcgi_param		REDIS_AUTH		"2EDI5R3d1S";
+fastcgi_param		REDIS_AUTH		"";
+

@@ -1,0 +1,56 @@
+FROM php:5.6-fpm
+
+MAINTAINER Jiashiwen "shiwen4@leju.com"
+
+ADD ./envconfig /envconfig
+RUN mkdir -p /project
+
+#Install php extention
+RUN apt-get update && apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libmcrypt-dev \
+        libpng12-dev \
+        php5-memcache \
+    && docker-php-ext-install iconv mcrypt \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install gd \
+    && docker-php-ext-configure mysql \
+    && docker-php-ext-install mysql \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install mysqli \
+    && docker-php-ext-install mbstring
+
+# Install memcached
+#COPY memcached-2.2.0.tgz /tmp/memcached-2.2.0.tgz
+RUN apt-get install -y libmemcached-dev zlib1g-dev libncurses5-dev
+#RUN tar -zxf /tmp/memcached-2.2.0.tgz -C /usr/src/php/ext/
+#RUN cd /tmp && tar zxf /tmp/memcached-2.2.0.tgz  
+#RUN mv /tmp/memcached-2.2.0 /usr/src/php/ext/memcached-2.2.0
+#RUN rm /tmp/memcached-2.2.0.tgz
+RUN pecl install memcached-2.2.0
+#RUN docker-php-ext-install memcached-2.2.0
+
+# Install memcache
+#COPY memcache-2.2.7.tgz /tmp/memcache-2.2.7.tgz
+#RUN tar -zxf /tmp/memcache-2.2.7.tgz -C /usr/src/php/ext
+#RUN rm /tmp/memcache-2.2.7.tgz
+#RUN docker-php-ext-install memcache-2.2.7
+RUN pecl install memcache-2.2.7
+
+
+#Install redis module
+#RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/2.2.7.tar.gz \
+#    && tar xfz /tmp/redis.tar.gz \
+#    && rm -r /tmp/redis.tar.gz \
+#    && mv phpredis-2.2.7 /usr/src/php/ext/redis \
+#    && docker-php-ext-install redis
+RUN pecl install redis-2.2.8
+#Clean apt
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+
+EXPOSE 9010 9011 9012 9013 9014 9015
+
+CMD ["php-fpm"]

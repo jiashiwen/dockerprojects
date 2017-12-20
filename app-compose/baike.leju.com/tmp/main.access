@@ -1,0 +1,8 @@
+127.0.0.1 - - [20/Dec/2017:16:54:32 +0800] "GET /index.html HTTP/1.1" 404 47 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.75 Safari/537.36"
+127.0.0.1 - - [20/Dec/2017:16:54:33 +0800] "GET /favicon.ico HTTP/1.1" 404 200 "http://baike.leju.com:8010/index.html" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.75 Safari/537.36"
+127.0.0.1 - - [20/Dec/2017:16:54:39 +0800] "GET / HTTP/1.1" 404 47 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.75 Safari/537.36"
+127.0.0.1 - - [20/Dec/2017:16:54:50 +0800] "GET /index.html HTTP/1.1" 404 47 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.75 Safari/537.36"
+127.0.0.1 - - [20/Dec/2017:16:57:58 +0800] "GET /index.html HTTP/1.1" 404 47 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.75 Safari/537.36"
+127.0.0.1 - - [20/Dec/2017:16:58:01 +0800] "GET / HTTP/1.1" 404 47 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.75 Safari/537.36"
+127.0.0.1 - - [20/Dec/2017:16:58:18 +0800] "GET / HTTP/1.1" 404 47 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.75 Safari/537.36"
+127.0.0.1 - - [20/Dec/2017:16:58:24 +0800] "GET /index.html HTTP/1.1" 200 55 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.75 Safari/537.36"
