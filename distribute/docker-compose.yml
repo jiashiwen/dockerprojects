@@ -1,0 +1,13 @@
+#  distribute.search.leju.com 
+
+version: '2'
+
+services:    
+  distribute:
+    image: registry.leju.com:5000/baseimages/nginx:1.9.8
+    volumes:
+        - ./conf.d:/etc/nginx/conf.d
+        - ./distributedfiles:/usr/share/nginx/html
+    network_mode: "host"
+    container_name: nginx_distribute 
+
