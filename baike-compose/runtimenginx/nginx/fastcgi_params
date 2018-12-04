@@ -1,22 +1,22 @@
 # 前台使用的静态规则
-fastcgi_param			PS_URL				"cdn.leju.com/estatepedia";
-fastcgi_param			PS_ADMIN			"cdn.leju.com/encyclopedia";
+fastcgi_param			PS_URL				"cdn.eju.com/estatepedia";
+fastcgi_param			PS_ADMIN			"cdn.eju.com/encyclopedia";
 
 # ThinkPHP 库配置
-fastcgi_param			PATH_THINKPHP		"/project/knowledge/src/lib";
+fastcgi_param			PATH_THINKPHP		"/project/knoledge/src/lib";
 # 定义基本变量
 fastcgi_param			PATH_RUNTIME		"/project/tmp";
 
 # 缓存配置
-fastcgi_param			REDIS_HOST			"10.20.120.209";
-fastcgi_param			REDIS_PORT			"6381";
+fastcgi_param			REDIS_HOST			"10.200.10.209";
+fastcgi_param			REDIS_PORT			"6361";
 fastcgi_param			REDIS_DB			"2";
-fastcgi_param			REDIS_AUTH			"2EDI5R3d1S";
+fastcgi_param			REDIS_AUTH			"2EDxxI5R3d1S";
 
 # 数据库配置
-fastcgi_param			DB_HOST				"10.20.120.209";
-fastcgi_param			DB_PORT				"3308";
-fastcgi_param			DB_NAME				"knowled";
+fastcgi_param			DB_HOST				"10.200.10.209";
+fastcgi_param			DB_PORT				"3306";
+fastcgi_param			DB_NAME				"knoled";
 fastcgi_param			DB_USER				"leser";
 fastcgi_param			DB_PASS				"xxxxxxxx";
 
@@ -25,6 +25,6 @@ fastcgi_param                   JAVA_SEARCH_SERVICE			"127.0.0.1:8100";
 fastcgi_param                   JAVA_SEARCH_USER                        "bae";
 fastcgi_param                   JAVA_SEARCH_PASS                        "xxxxxxxx";
 ## 敏感词处理服务
-fastcgi_param			SENSITIVE_SERVICE			"127.0.0.1:8110";
-fastcgi_param			WIKI_SERVICE				"127.0.0.1:8080";
+fastcgi_param			SENSITIVE_SERVICE			"127.0.0.1:8111";
+fastcgi_param			WIKI_SERVICE				"127.0.0.1:8880";
 
